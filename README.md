@@ -48,13 +48,21 @@ terá um tempo a ser definido pelo professor para apresentar seu trabalho. A ord
 MATERIAL A SER SUBMETIDO NO AVA
 
 No AVA deverá ser submetido:
+
 ▪ O projeto contendo os arquivos fontes exportados pelo Netbeans (usar a opção Arquivo > Exportar Projeto > Para
 Zip). Não utilizar bibliotecas de terceiros;
+
 ▪ O plano de testes;
+
 ▪ A implementação do plano de testes.
+
 ▪ O Diagrama de Classes UML (Enviar no formato pdf).
 RESTRIÇÕES E PRAZO
+
 ▪ O trabalho deve ser feito em equipe de 4 pessoas.
+
 ▪ A nota de apresentação será individual.
+
 ▪ O trabalho deve ser entregue até o dia 01/12 as 23:59.
+
 ▪ O trabalho deve ser apresentado para a turma na última semana de aula (02/12 e 04/12).
