@@ -25,16 +25,21 @@ requisito será detalhado nas semanas seguintes.
 MÉTODO DE AVALIAÇÃO
 
 É esperado que seja construído:
+
 ▪ [2 pontos] Diagrama de classes detalhando todas as classes e relacionamentos, com código fonte compatível com o
 diagrama. O diagrama de classes deve conter apenas as classes da camada de negócios. Utilizar a linguagem UML
 para desenhar o diagrama. O software para desenhar o diagrama de classes é de livre escolha da equipe, deixo duas
 sugestões, o software draw.io (DRAWIO, 2024) ou o software Astah UML, versão Student (ASTAH, 2024).
+
 ▪ [4,0 pontos] Implementação do programa, atendendo aos requisitos funcionais e construído utilizando-se a
 arquitetura em duas camadas. As classes da camada de negócio devem ser devidamente documentadas com o estilo
 javadoc;
+
 ▪ [1,0 ponto] Construção de um plano de testes para validar as classes da camada de negócios;
+
 ▪ [1,5 pontos] Implementação do plano de testes através do framework JUnit. Todos os métodos públicos (que não
 são getter e setter) devem possuir testes.
+
 As classes do projeto devem ser organizadas em pacotes conforme a arquitetura de duas camadas. O projeto deve conter
 apenas uma classe com o método main().
 [1,5 pontos] Os trabalhos serão obrigatoriamente apresentados para a turma na última semana de aula. Cada equipe
