@@ -39,6 +39,7 @@ apenas uma classe com o método main().
 terá um tempo a ser definido pelo professor para apresentar seu trabalho. A ordem de apresentação será por sorteio.
 
 MATERIAL A SER SUBMETIDO NO AVA
+
 No AVA deverá ser submetido:
 ▪ O projeto contendo os arquivos fontes exportados pelo Netbeans (usar a opção Arquivo > Exportar Projeto > Para
 Zip). Não utilizar bibliotecas de terceiros;
