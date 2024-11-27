@@ -21,7 +21,9 @@ Também devem ser atendidos aos seguintes requisitos não funcionais:
 9) Os dados submetidos pelo usuário devem ser gravados, bem como o programa deve recuperar os dados do disco
 quando o programa for iniciado. Os arquivos de dados devem ser formatados em arquivo no formato .csv. Este
 requisito será detalhado nas semanas seguintes.
+
 MÉTODO DE AVALIAÇÃO
+
 É esperado que seja construído:
 ▪ [2 pontos] Diagrama de classes detalhando todas as classes e relacionamentos, com código fonte compatível com o
 diagrama. O diagrama de classes deve conter apenas as classes da camada de negócios. Utilizar a linguagem UML
