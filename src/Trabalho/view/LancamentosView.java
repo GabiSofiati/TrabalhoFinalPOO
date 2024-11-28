@@ -4,6 +4,8 @@
  */
 package Trabalho.view;
 
+import Trabalho.model.TipoCategoria;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -90,8 +92,9 @@ public class LancamentosView extends javax.swing.JFrame {
         jScrollPane9 = new javax.swing.JScrollPane();
         listaCategoriaReceita = new Trabalho.view.ListaCategoria<>();
         jLabel4 = new javax.swing.JLabel();
-        tfPesquisa2 = new javax.swing.JTextField();
+        tfAdicionarCategoriaReceita = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        btnAdicionarReceita = new javax.swing.JButton();
         Despesas = new javax.swing.JPanel();
         tfPesquisaCategoriaDespesa = new javax.swing.JTextField();
         lblDataHoje2 = new javax.swing.JLabel();
@@ -113,6 +116,7 @@ public class LancamentosView extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         tfAdicionarCategoriaDespesa = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
+        btnAdicionarDespesa = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -128,11 +132,6 @@ public class LancamentosView extends javax.swing.JFrame {
         Menu.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 0, 0, 0));
         Menu.setForeground(new java.awt.Color(0, 0, 0));
         Menu.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        Menu.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                MenuMouseClicked(evt);
-            }
-        });
         jScrollPane2.setViewportView(Menu);
 
         Geral.setBackground(new java.awt.Color(255, 255, 255));
@@ -152,7 +151,7 @@ public class LancamentosView extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -175,7 +174,7 @@ public class LancamentosView extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -198,7 +197,7 @@ public class LancamentosView extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -247,12 +246,12 @@ public class LancamentosView extends javax.swing.JFrame {
                 .addGap(50, 50, 50)
                 .addGroup(GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(GeralLayout.createSequentialGroup()
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTabbedPane1)
                         .addGap(18, 18, 18)
                         .addGroup(GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(GeralLayout.createSequentialGroup()
                                 .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 224, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 238, Short.MAX_VALUE))
                             .addGroup(GeralLayout.createSequentialGroup()
                                 .addGap(6, 6, 6)
                                 .addGroup(GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -315,14 +314,14 @@ public class LancamentosView extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -338,14 +337,14 @@ public class LancamentosView extends javax.swing.JFrame {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -361,15 +360,12 @@ public class LancamentosView extends javax.swing.JFrame {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
         );
 
         jTabbedPane2.addTab("Futuras", jPanel7);
@@ -394,17 +390,40 @@ public class LancamentosView extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Receitas");
 
-        tfPesquisa2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        tfPesquisa2.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        tfPesquisa2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfPesquisa2ActionPerformed(evt);
-            }
-        });
+        tfAdicionarCategoriaReceita.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        tfAdicionarCategoriaReceita.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
         jButton1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jButton1.setText("+");
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        btnAdicionarReceita.setBackground(new java.awt.Color(33, 33, 33));
+        btnAdicionarReceita.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnAdicionarReceita.setForeground(new java.awt.Color(255, 255, 255));
+        btnAdicionarReceita.setText("Adicionar");
+        btnAdicionarReceita.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnAdicionarReceita.setBorderPainted(false);
+        btnAdicionarReceita.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAdicionarReceita.setFocusPainted(false);
+        btnAdicionarReceita.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnAdicionarReceitaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnAdicionarReceitaMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnAdicionarReceitaMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnAdicionarReceitaMouseReleased(evt);
+            }
+        });
+        btnAdicionarReceita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionarReceitaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout ReceitasLayout = new javax.swing.GroupLayout(Receitas);
         Receitas.setLayout(ReceitasLayout);
@@ -422,18 +441,18 @@ public class LancamentosView extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblDataHoje1))
                     .addGroup(ReceitasLayout.createSequentialGroup()
-                        .addComponent(jTabbedPane2)
+                        .addGroup(ReceitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTabbedPane2)
+                            .addComponent(btnAdicionarReceita, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(ReceitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
                             .addComponent(tfPesquisa1)
                             .addGroup(ReceitasLayout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(ReceitasLayout.createSequentialGroup()
-                                .addComponent(tfPesquisa2)
+                                .addComponent(tfAdicionarCategoriaReceita)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
+                            .addComponent(jLabel3))))
                 .addGap(24, 24, 24))
         );
         ReceitasLayout.setVerticalGroup(
@@ -459,12 +478,15 @@ public class LancamentosView extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(ReceitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tfPesquisa2))
-                        .addGap(3, 3, 3))
-                    .addComponent(jTabbedPane2))
-                .addGap(49, 49, 49))
+                        .addGroup(ReceitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfAdicionarCategoriaReceita, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(2, 2, 2))
+                    .addGroup(ReceitasLayout.createSequentialGroup()
+                        .addComponent(jTabbedPane2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAdicionarReceita, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(45, 45, 45))
         );
 
         Despesas.setBackground(new java.awt.Color(255, 255, 255));
@@ -499,7 +521,7 @@ public class LancamentosView extends javax.swing.JFrame {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane12, javax.swing.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
+                .addComponent(jScrollPane12, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -522,7 +544,7 @@ public class LancamentosView extends javax.swing.JFrame {
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane13, javax.swing.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
+                .addComponent(jScrollPane13, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -545,7 +567,7 @@ public class LancamentosView extends javax.swing.JFrame {
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane14, javax.swing.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
+                .addComponent(jScrollPane14, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -573,15 +595,38 @@ public class LancamentosView extends javax.swing.JFrame {
 
         tfAdicionarCategoriaDespesa.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         tfAdicionarCategoriaDespesa.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        tfAdicionarCategoriaDespesa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfAdicionarCategoriaDespesaActionPerformed(evt);
-            }
-        });
 
         jButton2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jButton2.setText("+");
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        btnAdicionarDespesa.setBackground(new java.awt.Color(33, 33, 33));
+        btnAdicionarDespesa.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnAdicionarDespesa.setForeground(new java.awt.Color(255, 255, 255));
+        btnAdicionarDespesa.setText("Adicionar");
+        btnAdicionarDespesa.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnAdicionarDespesa.setBorderPainted(false);
+        btnAdicionarDespesa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAdicionarDespesa.setFocusPainted(false);
+        btnAdicionarDespesa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnAdicionarDespesaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnAdicionarDespesaMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnAdicionarDespesaMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnAdicionarDespesaMouseReleased(evt);
+            }
+        });
+        btnAdicionarDespesa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionarDespesaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout DespesasLayout = new javax.swing.GroupLayout(Despesas);
         Despesas.setLayout(DespesasLayout);
@@ -599,14 +644,14 @@ public class LancamentosView extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblDataHoje2))
                     .addGroup(DespesasLayout.createSequentialGroup()
-                        .addComponent(jTabbedPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE)
+                        .addGroup(DespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTabbedPane5)
+                            .addComponent(btnAdicionarDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(DespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane15, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE)
                             .addComponent(tfPesquisaCategoriaDespesa)
-                            .addGroup(DespesasLayout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jLabel5)
                             .addGroup(DespesasLayout.createSequentialGroup()
                                 .addComponent(tfAdicionarCategoriaDespesa)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -634,14 +679,14 @@ public class LancamentosView extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(tfPesquisaCategoriaDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane15)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(DespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tfAdicionarCategoriaDespesa))
-                        .addGap(3, 3, 3))
+                        .addComponent(jScrollPane15))
                     .addComponent(jTabbedPane5))
-                .addGap(49, 49, 49))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(DespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnAdicionarDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tfAdicionarCategoriaDespesa))
+                .addGap(47, 47, 47))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -660,7 +705,7 @@ public class LancamentosView extends javax.swing.JFrame {
                     .addContainerGap()))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                    .addContainerGap(218, Short.MAX_VALUE)
+                    .addGap(218, 218, 218)
                     .addComponent(Despesas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addContainerGap()))
         );
@@ -697,17 +742,49 @@ public class LancamentosView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void MenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_MenuMouseClicked
+    private void btnAdicionarReceitaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdicionarReceitaMouseEntered
+        btnAdicionarReceita.setBackground(new Color(50, 50, 50));
+    }//GEN-LAST:event_btnAdicionarReceitaMouseEntered
 
-    private void tfPesquisa2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfPesquisa2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfPesquisa2ActionPerformed
+    private void btnAdicionarReceitaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdicionarReceitaMouseExited
+        btnAdicionarReceita.setBackground(new Color(33, 33, 33));
+    }//GEN-LAST:event_btnAdicionarReceitaMouseExited
 
-    private void tfAdicionarCategoriaDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfAdicionarCategoriaDespesaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfAdicionarCategoriaDespesaActionPerformed
+    private void btnAdicionarReceitaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdicionarReceitaMousePressed
+        btnAdicionarReceita.setBackground(new Color(80, 80, 80));
+    }//GEN-LAST:event_btnAdicionarReceitaMousePressed
+
+    private void btnAdicionarReceitaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdicionarReceitaMouseReleased
+        btnAdicionarReceita.setBackground(new Color(33, 33, 33));
+    }//GEN-LAST:event_btnAdicionarReceitaMouseReleased
+
+    private void btnAdicionarDespesaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdicionarDespesaMouseEntered
+        btnAdicionarDespesa.setBackground(new Color(50, 50, 50));
+    }//GEN-LAST:event_btnAdicionarDespesaMouseEntered
+
+    private void btnAdicionarDespesaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdicionarDespesaMouseExited
+        btnAdicionarDespesa.setBackground(new Color(33, 33, 33));
+    }//GEN-LAST:event_btnAdicionarDespesaMouseExited
+
+    private void btnAdicionarDespesaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdicionarDespesaMousePressed
+        btnAdicionarDespesa.setBackground(new Color(80, 80, 80));
+    }//GEN-LAST:event_btnAdicionarDespesaMousePressed
+
+    private void btnAdicionarDespesaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdicionarDespesaMouseReleased
+        btnAdicionarDespesa.setBackground(new Color(33, 33, 33));
+    }//GEN-LAST:event_btnAdicionarDespesaMouseReleased
+
+    private void btnAdicionarDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarDespesaActionPerformed
+        AdicionarLancamentoView popup = new AdicionarLancamentoView(TipoCategoria.DESPESA, this, true);
+        popup.setLocationRelativeTo(this);
+        popup.setVisible(true);
+    }//GEN-LAST:event_btnAdicionarDespesaActionPerformed
+
+    private void btnAdicionarReceitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarReceitaActionPerformed
+        AdicionarLancamentoView popup = new AdicionarLancamentoView(TipoCategoria.RECEITA, this, true);
+        popup.setLocationRelativeTo(this);
+        popup.setVisible(true);
+    }//GEN-LAST:event_btnAdicionarReceitaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -750,6 +827,8 @@ public class LancamentosView extends javax.swing.JFrame {
     private javax.swing.JPanel Geral;
     private Trabalho.view.ListaMenu<String> Menu;
     private javax.swing.JPanel Receitas;
+    private javax.swing.JButton btnAdicionarDespesa;
+    private javax.swing.JButton btnAdicionarReceita;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -768,11 +847,7 @@ public class LancamentosView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane10;
-    private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane13;
     private javax.swing.JScrollPane jScrollPane14;
@@ -787,8 +862,6 @@ public class LancamentosView extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JTabbedPane jTabbedPane3;
-    private javax.swing.JTabbedPane jTabbedPane4;
     private javax.swing.JTabbedPane jTabbedPane5;
     private javax.swing.JLabel lblDataHoje;
     private javax.swing.JLabel lblDataHoje1;
@@ -810,13 +883,11 @@ public class LancamentosView extends javax.swing.JFrame {
     private Trabalho.view.ListaCategoria<String> listaLancados;
     private Trabalho.view.ListaLancamento<String> listaTodasDespesas;
     private Trabalho.view.ListaLancamento<String> listaTodasReceitas;
-    private Trabalho.view.ListaLancamento<String> listaTodasReceitas1;
-    private Trabalho.view.ListaLancamento<String> listaTodasReceitas2;
     private Trabalho.view.ListaLancamento<String> listaTodos;
     private javax.swing.JTextField tfAdicionarCategoriaDespesa;
+    private javax.swing.JTextField tfAdicionarCategoriaReceita;
     private javax.swing.JTextField tfPesquisa;
     private javax.swing.JTextField tfPesquisa1;
-    private javax.swing.JTextField tfPesquisa2;
     private javax.swing.JTextField tfPesquisaCategoriaDespesa;
     // End of variables declaration//GEN-END:variables
 
