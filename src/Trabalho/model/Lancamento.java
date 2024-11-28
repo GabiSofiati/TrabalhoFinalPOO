@@ -5,7 +5,6 @@
 package Trabalho.model;
 
 import java.time.LocalDate;
-import java.util.Calendar;
 
 /**
  * Representa um lancamento
