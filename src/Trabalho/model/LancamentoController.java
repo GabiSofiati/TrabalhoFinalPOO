@@ -29,6 +29,9 @@ public class LancamentoController {
      * @param lancamento o lancamento a ser adicionado
      */
     public void inserirLancamento(Lancamento lancamento){
+        if (lancamento == null) {
+            throw  new IllegalArgumentException();
+        }
         lancamentos.add(lancamento);
     }
     
@@ -37,6 +40,9 @@ public class LancamentoController {
      * @param lancamento o lancamento a ser removido
      */
     public void removerLancamento(Lancamento lancamento){
+        if (lancamento == null) {
+            throw  new IllegalArgumentException();
+        }
         lancamentos.remove(lancamento);
     }
     
