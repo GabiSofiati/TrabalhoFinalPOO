@@ -4,9 +4,15 @@
  */
 package Trabalho.view;
 
+import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 /**
  *
- * @author Usuario
+ * @author Paulo Fontenele da Silva
  */
 public class LancamentosView extends javax.swing.JFrame {
 
@@ -15,6 +21,23 @@ public class LancamentosView extends javax.swing.JFrame {
      */
     public LancamentosView() {
         initComponents();
+        
+        Menu.addItem(new ItemMenu("Geral"));
+        Menu.addItem(new ItemMenu("Receitas"));
+        Menu.addItem(new ItemMenu("Despesas"));
+        Menu.setSelectedIndex(0);
+        
+        Menu.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                switch(Menu.getSelectedIndex()){
+                    case 0 -> Geral();
+                    case 1 -> Receitas();
+                    case 2 -> Despesas();
+                }
+            }
+        });
+        
     }
 
     /**
@@ -26,21 +49,665 @@ public class LancamentosView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        Menu = new Trabalho.view.ListaMenu<>();
+        Geral = new javax.swing.JPanel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        listaTodos = new Trabalho.view.ListaLancamento<>();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        listaLancados = new Trabalho.view.ListaCategoria<>();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        listaFuturos = new Trabalho.view.ListaLancamento<>();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        listaCategoria = new Trabalho.view.ListaCategoria<>();
+        jLabel2 = new javax.swing.JLabel();
+        tfPesquisa = new javax.swing.JTextField();
+        lblDataHoje = new javax.swing.JLabel();
+        lblSaldoAtual = new javax.swing.JLabel();
+        lblSaldoTotal = new javax.swing.JLabel();
+        Receitas = new javax.swing.JPanel();
+        tfPesquisa1 = new javax.swing.JTextField();
+        lblDataHoje1 = new javax.swing.JLabel();
+        jTabbedPane2 = new javax.swing.JTabbedPane();
+        jPanel5 = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        listaTodasReceitas = new Trabalho.view.ListaLancamento<>();
+        jPanel6 = new javax.swing.JPanel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        listaLancadasReceitas = new Trabalho.view.ListaCategoria<>();
+        jPanel7 = new javax.swing.JPanel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        listaFuturasReceitas = new Trabalho.view.ListaLancamento<>();
+        lblSaldoAtual1 = new javax.swing.JLabel();
+        lblSaldoTotal1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        listaCategoriaReceita = new Trabalho.view.ListaCategoria<>();
+        jLabel4 = new javax.swing.JLabel();
+        tfPesquisa2 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        Despesas = new javax.swing.JPanel();
+        tfPesquisaCategoriaDespesa = new javax.swing.JTextField();
+        lblDataHoje2 = new javax.swing.JLabel();
+        jTabbedPane5 = new javax.swing.JTabbedPane();
+        jPanel10 = new javax.swing.JPanel();
+        jScrollPane12 = new javax.swing.JScrollPane();
+        listaTodasDespesas = new Trabalho.view.ListaLancamento<>();
+        jPanel11 = new javax.swing.JPanel();
+        jScrollPane13 = new javax.swing.JScrollPane();
+        listaLancadasDespesas = new Trabalho.view.ListaCategoria<>();
+        jPanel12 = new javax.swing.JPanel();
+        jScrollPane14 = new javax.swing.JScrollPane();
+        listaFuturasDespesas = new Trabalho.view.ListaLancamento<>();
+        lblSaldoAtual2 = new javax.swing.JLabel();
+        lblSaldoTotal2 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jScrollPane15 = new javax.swing.JScrollPane();
+        listaCategoriaDespesa = new Trabalho.view.ListaCategoria<>();
+        jLabel6 = new javax.swing.JLabel();
+        tfAdicionarCategoriaDespesa = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.setFont(new java.awt.Font("Calibri", 1, 24)); // NOI18N
+
+        jScrollPane2.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+
+        Menu.setBackground(new java.awt.Color(204, 204, 204));
+        Menu.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 0, 0, 0));
+        Menu.setForeground(new java.awt.Color(0, 0, 0));
+        Menu.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        Menu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MenuMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(Menu);
+
+        Geral.setBackground(new java.awt.Color(255, 255, 255));
+        Geral.setForeground(new java.awt.Color(255, 255, 255));
+
+        jTabbedPane1.setBackground(new java.awt.Color(204, 204, 204));
+        jTabbedPane1.setForeground(new java.awt.Color(0, 0, 0));
+        jTabbedPane1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+
+        jPanel2.setForeground(new java.awt.Color(153, 153, 153));
+
+        jScrollPane3.setViewportView(listaTodos);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Todos", jPanel2);
+
+        jPanel3.setForeground(new java.awt.Color(153, 153, 153));
+
+        jScrollPane4.setViewportView(listaLancados);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Lançados", jPanel3);
+
+        jPanel4.setForeground(new java.awt.Color(153, 153, 153));
+
+        jScrollPane5.setViewportView(listaFuturos);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Futuros", jPanel4);
+
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setText("Categorias");
+
+        jScrollPane1.setViewportView(listaCategoria);
+
+        jLabel2.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setText("Lançamentos");
+
+        tfPesquisa.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        tfPesquisa.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+
+        lblDataHoje.setFont(new java.awt.Font("Artifakt Element Hair", 0, 24)); // NOI18N
+        lblDataHoje.setForeground(new java.awt.Color(0, 0, 0));
+        lblDataHoje.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        lblDataHoje.setText("Hoje: dd/mm/aaaa");
+
+        lblSaldoAtual.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblSaldoAtual.setForeground(new java.awt.Color(0, 0, 0));
+        lblSaldoAtual.setText("Saldo atual:");
+        lblSaldoAtual.setToolTipText("Saldo disponível até a data atual");
+
+        lblSaldoTotal.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblSaldoTotal.setForeground(new java.awt.Color(0, 0, 0));
+        lblSaldoTotal.setText("Saldo total:");
+        lblSaldoTotal.setToolTipText("Saldo disponível independente do período");
+
+        javax.swing.GroupLayout GeralLayout = new javax.swing.GroupLayout(Geral);
+        Geral.setLayout(GeralLayout);
+        GeralLayout.setHorizontalGroup(
+            GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(GeralLayout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addGroup(GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(GeralLayout.createSequentialGroup()
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(GeralLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 224, Short.MAX_VALUE))
+                            .addGroup(GeralLayout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addGroup(GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tfPesquisa)
+                                    .addComponent(jScrollPane1)))))
+                    .addGroup(GeralLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(125, 125, 125)
+                        .addGroup(GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblSaldoAtual)
+                            .addComponent(lblSaldoTotal))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblDataHoje)))
+                .addGap(24, 24, 24))
+        );
+        GeralLayout.setVerticalGroup(
+            GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, GeralLayout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblSaldoAtual)
+                    .addComponent(jLabel2)
+                    .addComponent(lblDataHoje))
+                .addGap(1, 1, 1)
+                .addComponent(lblSaldoTotal)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(GeralLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1))
+                    .addComponent(jTabbedPane1))
+                .addGap(37, 37, 37))
+        );
+
+        Receitas.setBackground(new java.awt.Color(255, 255, 255));
+        Receitas.setForeground(new java.awt.Color(255, 255, 255));
+
+        tfPesquisa1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        tfPesquisa1.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+
+        lblDataHoje1.setFont(new java.awt.Font("Artifakt Element Hair", 0, 24)); // NOI18N
+        lblDataHoje1.setForeground(new java.awt.Color(0, 0, 0));
+        lblDataHoje1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        lblDataHoje1.setText("Hoje: dd/mm/aaaa");
+
+        jTabbedPane2.setBackground(new java.awt.Color(204, 204, 204));
+        jTabbedPane2.setForeground(new java.awt.Color(0, 0, 0));
+        jTabbedPane2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+
+        jPanel5.setForeground(new java.awt.Color(153, 153, 153));
+
+        jScrollPane6.setViewportView(listaTodasReceitas);
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane2.addTab("Todas", jPanel5);
+
+        jPanel6.setForeground(new java.awt.Color(153, 153, 153));
+
+        jScrollPane7.setViewportView(listaLancadasReceitas);
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane2.addTab("Lançadas", jPanel6);
+
+        jPanel7.setForeground(new java.awt.Color(153, 153, 153));
+
+        jScrollPane8.setViewportView(listaFuturasReceitas);
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane2.addTab("Futuras", jPanel7);
+
+        lblSaldoAtual1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblSaldoAtual1.setForeground(new java.awt.Color(0, 0, 0));
+        lblSaldoAtual1.setText("Saldo atual:");
+        lblSaldoAtual1.setToolTipText("Saldo disponível até a data atual");
+
+        lblSaldoTotal1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblSaldoTotal1.setForeground(new java.awt.Color(0, 0, 0));
+        lblSaldoTotal1.setText("Saldo total:");
+        lblSaldoTotal1.setToolTipText("Saldo disponível independente do período");
+
+        jLabel3.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setText("Categorias");
+
+        jScrollPane9.setViewportView(listaCategoriaReceita);
+
+        jLabel4.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setText("Receitas");
+
+        tfPesquisa2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        tfPesquisa2.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        tfPesquisa2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfPesquisa2ActionPerformed(evt);
+            }
+        });
+
+        jButton1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jButton1.setText("+");
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout ReceitasLayout = new javax.swing.GroupLayout(Receitas);
+        Receitas.setLayout(ReceitasLayout);
+        ReceitasLayout.setHorizontalGroup(
+            ReceitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ReceitasLayout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addGroup(ReceitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(ReceitasLayout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(186, 186, 186)
+                        .addGroup(ReceitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblSaldoAtual1)
+                            .addComponent(lblSaldoTotal1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblDataHoje1))
+                    .addGroup(ReceitasLayout.createSequentialGroup()
+                        .addComponent(jTabbedPane2)
+                        .addGap(18, 18, 18)
+                        .addGroup(ReceitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
+                            .addComponent(tfPesquisa1)
+                            .addGroup(ReceitasLayout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(ReceitasLayout.createSequentialGroup()
+                                .addComponent(tfPesquisa2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(24, 24, 24))
+        );
+        ReceitasLayout.setVerticalGroup(
+            ReceitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ReceitasLayout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addGroup(ReceitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(ReceitasLayout.createSequentialGroup()
+                        .addGroup(ReceitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(lblDataHoje1))
+                        .addGap(33, 33, 33))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ReceitasLayout.createSequentialGroup()
+                        .addComponent(lblSaldoAtual1)
+                        .addGap(5, 5, 5)
+                        .addComponent(lblSaldoTotal1)))
+                .addGap(6, 6, 6)
+                .addGroup(ReceitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(ReceitasLayout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tfPesquisa1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(ReceitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tfPesquisa2))
+                        .addGap(3, 3, 3))
+                    .addComponent(jTabbedPane2))
+                .addGap(49, 49, 49))
+        );
+
+        Despesas.setBackground(new java.awt.Color(255, 255, 255));
+        Despesas.setForeground(new java.awt.Color(255, 255, 255));
+
+        tfPesquisaCategoriaDespesa.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        tfPesquisaCategoriaDespesa.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+
+        lblDataHoje2.setFont(new java.awt.Font("Artifakt Element Hair", 0, 24)); // NOI18N
+        lblDataHoje2.setForeground(new java.awt.Color(0, 0, 0));
+        lblDataHoje2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        lblDataHoje2.setText("Hoje: dd/mm/aaaa");
+
+        jTabbedPane5.setBackground(new java.awt.Color(204, 204, 204));
+        jTabbedPane5.setForeground(new java.awt.Color(0, 0, 0));
+        jTabbedPane5.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+
+        jPanel10.setForeground(new java.awt.Color(153, 153, 153));
+
+        jScrollPane12.setViewportView(listaTodasDespesas);
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane12, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane12, javax.swing.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane5.addTab("Todas", jPanel10);
+
+        jPanel11.setForeground(new java.awt.Color(153, 153, 153));
+
+        jScrollPane13.setViewportView(listaLancadasDespesas);
+
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane13, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane13, javax.swing.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane5.addTab("Lançadas", jPanel11);
+
+        jPanel12.setForeground(new java.awt.Color(153, 153, 153));
+
+        jScrollPane14.setViewportView(listaFuturasDespesas);
+
+        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
+        jPanel12.setLayout(jPanel12Layout);
+        jPanel12Layout.setHorizontalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane14, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel12Layout.setVerticalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane14, javax.swing.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane5.addTab("Futuras", jPanel12);
+
+        lblSaldoAtual2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblSaldoAtual2.setForeground(new java.awt.Color(0, 0, 0));
+        lblSaldoAtual2.setText("Saldo atual:");
+        lblSaldoAtual2.setToolTipText("Saldo disponível até a data atual");
+
+        lblSaldoTotal2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblSaldoTotal2.setForeground(new java.awt.Color(0, 0, 0));
+        lblSaldoTotal2.setText("Saldo total:");
+        lblSaldoTotal2.setToolTipText("Saldo disponível independente do período");
+
+        jLabel5.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setText("Categorias");
+
+        jScrollPane15.setViewportView(listaCategoriaDespesa);
+
+        jLabel6.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel6.setText("Despesas");
+
+        tfAdicionarCategoriaDespesa.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        tfAdicionarCategoriaDespesa.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        tfAdicionarCategoriaDespesa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfAdicionarCategoriaDespesaActionPerformed(evt);
+            }
+        });
+
+        jButton2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jButton2.setText("+");
+        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout DespesasLayout = new javax.swing.GroupLayout(Despesas);
+        Despesas.setLayout(DespesasLayout);
+        DespesasLayout.setHorizontalGroup(
+            DespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DespesasLayout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addGroup(DespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(DespesasLayout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(186, 186, 186)
+                        .addGroup(DespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblSaldoAtual2)
+                            .addComponent(lblSaldoTotal2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblDataHoje2))
+                    .addGroup(DespesasLayout.createSequentialGroup()
+                        .addComponent(jTabbedPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addGroup(DespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane15, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE)
+                            .addComponent(tfPesquisaCategoriaDespesa)
+                            .addGroup(DespesasLayout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(DespesasLayout.createSequentialGroup()
+                                .addComponent(tfAdicionarCategoriaDespesa)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(24, 24, 24))
+        );
+        DespesasLayout.setVerticalGroup(
+            DespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DespesasLayout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addGroup(DespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(DespesasLayout.createSequentialGroup()
+                        .addGroup(DespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(lblDataHoje2))
+                        .addGap(33, 33, 33))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DespesasLayout.createSequentialGroup()
+                        .addComponent(lblSaldoAtual2)
+                        .addGap(5, 5, 5)
+                        .addComponent(lblSaldoTotal2)))
+                .addGap(6, 6, 6)
+                .addGroup(DespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(DespesasLayout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tfPesquisaCategoriaDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane15)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(DespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tfAdicionarCategoriaDespesa))
+                        .addGap(3, 3, 3))
+                    .addComponent(jTabbedPane5))
+                .addGap(49, 49, 49))
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Geral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGap(218, 218, 218)
+                    .addComponent(Receitas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addContainerGap(218, Short.MAX_VALUE)
+                    .addComponent(Despesas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(Geral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(Receitas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(Despesas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void MenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MenuMouseClicked
+
+    private void tfPesquisa2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfPesquisa2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfPesquisa2ActionPerformed
+
+    private void tfAdicionarCategoriaDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfAdicionarCategoriaDespesaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfAdicionarCategoriaDespesaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -53,7 +720,7 @@ public class LancamentosView extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -79,5 +746,103 @@ public class LancamentosView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Despesas;
+    private javax.swing.JPanel Geral;
+    private Trabalho.view.ListaMenu<String> Menu;
+    private javax.swing.JPanel Receitas;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane10;
+    private javax.swing.JScrollPane jScrollPane11;
+    private javax.swing.JScrollPane jScrollPane12;
+    private javax.swing.JScrollPane jScrollPane13;
+    private javax.swing.JScrollPane jScrollPane14;
+    private javax.swing.JScrollPane jScrollPane15;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JTabbedPane jTabbedPane3;
+    private javax.swing.JTabbedPane jTabbedPane4;
+    private javax.swing.JTabbedPane jTabbedPane5;
+    private javax.swing.JLabel lblDataHoje;
+    private javax.swing.JLabel lblDataHoje1;
+    private javax.swing.JLabel lblDataHoje2;
+    private javax.swing.JLabel lblSaldoAtual;
+    private javax.swing.JLabel lblSaldoAtual1;
+    private javax.swing.JLabel lblSaldoAtual2;
+    private javax.swing.JLabel lblSaldoTotal;
+    private javax.swing.JLabel lblSaldoTotal1;
+    private javax.swing.JLabel lblSaldoTotal2;
+    private Trabalho.view.ListaCategoria<String> listaCategoria;
+    private Trabalho.view.ListaCategoria<String> listaCategoriaDespesa;
+    private Trabalho.view.ListaCategoria<String> listaCategoriaReceita;
+    private Trabalho.view.ListaLancamento<String> listaFuturasDespesas;
+    private Trabalho.view.ListaLancamento<String> listaFuturasReceitas;
+    private Trabalho.view.ListaLancamento<String> listaFuturos;
+    private Trabalho.view.ListaCategoria<String> listaLancadasDespesas;
+    private Trabalho.view.ListaCategoria<String> listaLancadasReceitas;
+    private Trabalho.view.ListaCategoria<String> listaLancados;
+    private Trabalho.view.ListaLancamento<String> listaTodasDespesas;
+    private Trabalho.view.ListaLancamento<String> listaTodasReceitas;
+    private Trabalho.view.ListaLancamento<String> listaTodasReceitas1;
+    private Trabalho.view.ListaLancamento<String> listaTodasReceitas2;
+    private Trabalho.view.ListaLancamento<String> listaTodos;
+    private javax.swing.JTextField tfAdicionarCategoriaDespesa;
+    private javax.swing.JTextField tfPesquisa;
+    private javax.swing.JTextField tfPesquisa1;
+    private javax.swing.JTextField tfPesquisa2;
+    private javax.swing.JTextField tfPesquisaCategoriaDespesa;
     // End of variables declaration//GEN-END:variables
+
+    public void Geral(){
+        
+        Despesas.setVisible(false);
+        Receitas.setVisible(false);
+        Geral.setVisible(true);
+        
+    }
+    
+    public void Receitas(){
+        
+        Despesas.setVisible(false);
+        Geral.setVisible(false);
+        Receitas.setVisible(true);
+        
+    }
+    
+    public void Despesas(){
+        
+        Receitas.setVisible(false);
+        Geral.setVisible(false);
+        Despesas.setVisible(true);
+        
+    }
+
+
 }
