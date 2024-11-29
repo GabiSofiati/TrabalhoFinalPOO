@@ -4,6 +4,7 @@
  */
 package Trabalho.model;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import org.junit.After;
@@ -18,22 +19,22 @@ import static org.junit.Assert.*;
  * @author Gabi Sofiati Rausch
  */
 public class LancamentoControllerTest {
-    
+
     public LancamentoControllerTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -50,7 +51,8 @@ public class LancamentoControllerTest {
     }
 
     /**
-     * Teste para ver se remover um lançamento nulo causa IllegalArgumentException.
+     * Teste para ver se remover um lançamento nulo causa
+     * IllegalArgumentException.
      */
     @Test(expected = IllegalArgumentException.class)
     public void testRemoverLancamentoNulo() {
@@ -61,172 +63,89 @@ public class LancamentoControllerTest {
     }
 
     /**
-     * Test of getLancamentos method, of class LancamentoController.
+     * Teste para carregar lançamentos de um arquivo válido.
      */
     @Test
-    public void testGetLancamentos() {
-        System.out.println("getLancamentos");
-        LancamentoController instance = new LancamentoController();
-        ArrayList<Lancamento> expResult = null;
-        ArrayList<Lancamento> result = instance.getLancamentos();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testCarregarLancamentosArquivoValido() {
+        System.out.println("carregarLancamentosArquivoValido");
+        LancamentoController controller = new LancamentoController();
+        controller.setDiretorioSalvamento("src/Trabalho/arquivos/");
+
+        try {
+            controller.carregarLancamentos();
+            assertFalse("A lista de lançamentos não deve estar vazia", controller.getLancamentos().isEmpty());
+        } catch (IOException e) {
+            fail("Exceção inesperada ao carregar lançamentos: " + e.getMessage());
+        }
     }
 
     /**
-     * Test of carregarLancamentos method, of class LancamentoController.
+     * Teste para salvar lançamentos em um arquivo válido.
      */
     @Test
-    public void testCarregarLancamentos() {
-        System.out.println("carregarLancamentos");
-        LancamentoController instance = new LancamentoController();
-        instance.carregarLancamentos();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testSalvarLancamentosArquivoValido() {
+        System.out.println("salvarLancamentosArquivoValido");
+        LancamentoController controller = new LancamentoController();
+        controller.setDiretorioSalvamento("src/Trabalho/arquivos/");
+        Receita receita = new Receita(200.0, LocalDate.now(), new Categoria("Bônus", TipoCategoria.RECEITA));
+        controller.inserirLancamento(receita);
+
+        try {
+            controller.salvarLancamentos();
+            assertTrue("Arquivo deve ser salvo sem erros", true);
+        } catch (IOException e) {
+            fail("Exceção inesperada ao salvar lançamentos: " + e.getMessage());
+        }
     }
 
     /**
-     * Test of salvarLancamentos method, of class LancamentoController.
+     * Teste para incluir uma categoria nula.
      */
-    @Test
-    public void testSalvarLancamentos() {
-        System.out.println("salvarLancamentos");
-        LancamentoController instance = new LancamentoController();
-        instance.salvarLancamentos();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of incluirCategoria method, of class LancamentoController.
-     */
-    @Test
-    public void testIncluirCategoria() {
-        System.out.println("incluirCategoria");
+    @Test(expected = IllegalArgumentException.class)
+    public void testIncluirCategoriaNula() {
+        System.out.println("incluirCategoriaNula");
         Categoria categoria = null;
-        LancamentoController instance = new LancamentoController();
-        instance.incluirCategoria(categoria);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        LancamentoController controller = new LancamentoController();
+        controller.incluirCategoria(categoria);
     }
 
     /**
-     * Test of removerCategoria method, of class LancamentoController.
+     * Teste para remover uma categoria nula.
      */
-    @Test
-    public void testRemoverCategoria() {
-        System.out.println("removerCategoria");
+    @Test(expected = IllegalArgumentException.class)
+    public void testRemoverCategoriaNula() {
+        System.out.println("removerCategoriaNula");
         Categoria categoria = null;
-        LancamentoController instance = new LancamentoController();
-        instance.removerCategoria(categoria);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        LancamentoController controller = new LancamentoController();
+        controller.removerCategoria(categoria);
     }
 
     /**
-     * Test of getCategorias method, of class LancamentoController.
+     * Teste para calcular saldo com período indefinido.
      */
     @Test
-    public void testGetCategorias() {
-        System.out.println("getCategorias");
-        LancamentoController instance = new LancamentoController();
-        ArrayList<Categoria> expResult = null;
-        ArrayList<Categoria> result = instance.getCategorias();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testCalcularSaldoPeriodoIndefinido() {
+        System.out.println("calcularSaldoPeriodoIndefinido");
+        LancamentoController controller = new LancamentoController();
+        controller.inserirLancamento(new Receita(500.0, LocalDate.now(), new Categoria("Investimento", TipoCategoria.RECEITA)));
+        controller.inserirLancamento(new Despesa(200.0, LocalDate.now(), new Categoria("Aluguel", TipoCategoria.DESPESA)));
+
+        double saldo = controller.calcularSaldo(null, null);
+        assertEquals(300.0, saldo, 0.01);
     }
 
     /**
-     * Test of carregarCategorias method, of class LancamentoController.
+     * Teste para calcular saldo em período válido.
      */
     @Test
-    public void testCarregarCategorias() {
-        System.out.println("carregarCategorias");
-        LancamentoController instance = new LancamentoController();
-        instance.carregarCategorias();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testCalcularSaldoPeriodoValido() {
+        System.out.println("calcularSaldoPeriodoValido");
+        LancamentoController controller = new LancamentoController();
+        controller.inserirLancamento(new Receita(500.0, LocalDate.of(2024, 1, 1), new Categoria("Investimento", TipoCategoria.RECEITA)));
+        controller.inserirLancamento(new Despesa(200.0, LocalDate.of(2024, 1, 10), new Categoria("Aluguel", TipoCategoria.DESPESA)));
+
+        double saldo = controller.calcularSaldo(LocalDate.of(2024, 1, 1), LocalDate.of(2024, 1, 31));
+        assertEquals(300.0, saldo, 0.01);
     }
 
-    /**
-     * Test of salvarCategorias method, of class LancamentoController.
-     */
-    @Test
-    public void testSalvarCategorias() {
-        System.out.println("salvarCategorias");
-        LancamentoController instance = new LancamentoController();
-        instance.salvarCategorias();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getDiretorioSalvamento method, of class LancamentoController.
-     */
-    @Test
-    public void testGetDiretorioSalvamento() {
-        System.out.println("getDiretorioSalvamento");
-        LancamentoController instance = new LancamentoController();
-        String expResult = "";
-        String result = instance.getDiretorioSalvamento();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setDiretorioSalvamento method, of class LancamentoController.
-     */
-    @Test
-    public void testSetDiretorioSalvamento() {
-        System.out.println("setDiretorioSalvamento");
-        String diretorioSalvamento = "";
-        LancamentoController instance = new LancamentoController();
-        instance.setDiretorioSalvamento(diretorioSalvamento);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of carregarDiretorioSalvamento method, of class LancamentoController.
-     */
-    @Test
-    public void testCarregarDiretorioSalvamento() {
-        System.out.println("carregarDiretorioSalvamento");
-        LancamentoController instance = new LancamentoController();
-        instance.carregarDiretorioSalvamento();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of salvarDiretorioSalvamento method, of class LancamentoController.
-     */
-    @Test
-    public void testSalvarDiretorioSalvamento() {
-        System.out.println("salvarDiretorioSalvamento");
-        LancamentoController instance = new LancamentoController();
-        instance.salvarDiretorioSalvamento();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of calcularSaldo method, of class LancamentoController.
-     */
-    @Test
-    public void testCalcularSaldo() {
-        System.out.println("calcularSaldo");
-        LocalDate desde = null;
-        LocalDate ate = null;
-        LancamentoController instance = new LancamentoController();
-        double expResult = 0.0;
-        double result = instance.calcularSaldo(desde, ate);
-        assertEquals(expResult, result, 0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-    
 }
