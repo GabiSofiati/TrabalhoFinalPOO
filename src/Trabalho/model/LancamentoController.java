@@ -20,7 +20,6 @@ import java.util.Scanner;
  */
 public class LancamentoController {
 
-    private String diretorioSalvamento = "src/Trabalho/arquivos";
     private ArrayList<Lancamento> lancamentos = new ArrayList<>();
     private ArrayList<Categoria> categorias = new ArrayList<>();
     
@@ -60,7 +59,7 @@ public class LancamentoController {
     public void carregarLancamentos(){
         
         lancamentos.clear();
-        File arquivo = new File(getDiretorioSalvamento() + "lancamentos.csv");
+        File arquivo = new File("src/Trabalho/arquivos/lancamentos.csv");
         
         try (Scanner arqTexto = new Scanner(arquivo)){
             while (arqTexto.hasNext()){
@@ -83,7 +82,7 @@ public class LancamentoController {
      */
     public void salvarLancamentos(){
         
-        File arquivo = new File(getDiretorioSalvamento() + "lancamentos.csv");
+        File arquivo = new File("src/Trabalho/arquivos/lancamentos.csv");
         
         try (FileOutputStream fos = new FileOutputStream(arquivo);
              PrintWriter arquivoTexto = new PrintWriter(fos)){
@@ -136,7 +135,7 @@ public class LancamentoController {
      */
     public void carregarCategorias(){
         categorias.clear();
-        File arquivo = new File(getDiretorioSalvamento() + "categorias.csv");
+        File arquivo = new File("src/Trabalho/arquivos/categorias.csv");
         
         try (Scanner arqTexto = new Scanner(arquivo)){
             while (arqTexto.hasNext()){
@@ -156,7 +155,7 @@ public class LancamentoController {
      */
     public void salvarCategorias(){
         
-        File arquivo = new File(getDiretorioSalvamento() + "categorias.csv");
+        File arquivo = new File("src/Trabalho/arquivos/categorias.csv");
         
         try (FileOutputStream fos = new FileOutputStream(arquivo);
              PrintWriter arquivoTexto = new PrintWriter(fos)){
@@ -171,55 +170,6 @@ public class LancamentoController {
         
         }
         
-    }
-    
-    /**
-     * Retorna o diretorio de salvamento
-     * @return String o diretorio de salvamento
-     */
-    public String getDiretorioSalvamento() {
-        return diretorioSalvamento;
-    }
-
-    /**
-     * Define um diretorio de salvamento
-     * @param diretorioSalvamento o diretorio de salvamento
-     */
-    public void setDiretorioSalvamento(String diretorioSalvamento) {
-        this.diretorioSalvamento = diretorioSalvamento;
-    }
-    
-    /**
-     * Recupera o diretorio de salvamento do arquivo "diretorioSalvamento.txt"
-     */
-    public void carregarDiretorioSalvamento(){
-        File arquivo = new File("src/arquivos/diretorioSalvamento.txt");
-        
-        try (Scanner arqTexto = new Scanner(arquivo)){
-            while (arqTexto.hasNext()){
-                setDiretorioSalvamento(arqTexto.nextLine());
-            }
-        } catch (IOException e) {
-            System.out.println("Erro ao carregar diretorio " + e.getMessage());
-        }
-    }
-    
-    /**
-     * Persiste o diretorio de salvamento no arquivo "diretorioSalvamento.txt"
-     */
-    public void salvarDiretorioSalvamento(){
-        File arquivo = new File("src/arquivos/diretorioSalvamento.txt");
-        
-        try (FileOutputStream fos = new FileOutputStream(arquivo);
-             PrintWriter arquivoTexto = new PrintWriter(fos)){
-            
-            arquivoTexto.println(getDiretorioSalvamento());
-            
-        } catch (IOException e) {
-        
-            System.out.println("Erro ao salvar " + e.getMessage());
-        
-        }
     }
     
     /**
