@@ -4,11 +4,14 @@
  */
 package Trabalho.view;
 
+import Trabalho.model.Categoria;
+import Trabalho.model.Despesa;
+import Trabalho.model.Lancamento;
+import Trabalho.model.LancamentoController;
+import Trabalho.model.Receita;
 import Trabalho.model.TipoCategoria;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.time.LocalDate;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -18,11 +21,27 @@ import javax.swing.event.ListSelectionListener;
  */
 public class LancamentosView extends javax.swing.JFrame {
 
+    LancamentoController controller = new LancamentoController();
+    
     /**
      * Creates new form FinancasView
      */
     public LancamentosView() {
         initComponents();
+        
+        jScrollPane.getVerticalScrollBar().setUnitIncrement(15);
+        jScrollPane1.getVerticalScrollBar().setUnitIncrement(15);
+        jScrollPane2.getVerticalScrollBar().setUnitIncrement(15);
+        jScrollPane3.getVerticalScrollBar().setUnitIncrement(15);
+        jScrollPane4.getVerticalScrollBar().setUnitIncrement(15);
+        jScrollPane5.getVerticalScrollBar().setUnitIncrement(15);
+        jScrollPane6.getVerticalScrollBar().setUnitIncrement(15);
+        jScrollPane7.getVerticalScrollBar().setUnitIncrement(15);
+        jScrollPane8.getVerticalScrollBar().setUnitIncrement(15);
+        jScrollPane9.getVerticalScrollBar().setUnitIncrement(15);
+        jScrollPane10.getVerticalScrollBar().setUnitIncrement(15);
+        jScrollPane11.getVerticalScrollBar().setUnitIncrement(15);
+        jScrollPane12.getVerticalScrollBar().setUnitIncrement(15);
         
         Menu.addItem(new ItemMenu("Geral"));
         Menu.addItem(new ItemMenu("Receitas"));
@@ -39,6 +58,14 @@ public class LancamentosView extends javax.swing.JFrame {
                 }
             }
         });
+        
+        controller.inserirLancamento(new Receita(230.99, LocalDate.now(), new Categoria("Teste", TipoCategoria.RECEITA)));
+        controller.inserirLancamento(new Despesa(150.99, LocalDate.now().plusDays(2), new Categoria("Teste", TipoCategoria.DESPESA)));
+        controller.inserirLancamento(new Receita(250.99, LocalDate.now().plusDays(3), new Categoria("Teste", TipoCategoria.RECEITA)));
+        controller.inserirLancamento(new Despesa(150.99, LocalDate.now().plusDays(4), new Categoria("Teste", TipoCategoria.DESPESA)));
+        
+        
+        inicializarListas();
         
     }
 
@@ -57,66 +84,66 @@ public class LancamentosView extends javax.swing.JFrame {
         Geral = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        listaTodos = new Trabalho.view.ListaLancamento<>();
+        jScrollPane = new javax.swing.JScrollPane();
+        listaTodos = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        listaLancados = new Trabalho.view.ListaCategoria<>();
-        jPanel4 = new javax.swing.JPanel();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        listaFuturos = new Trabalho.view.ListaLancamento<>();
-        jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        listaCategoria = new Trabalho.view.ListaCategoria<>();
+        listaLancados = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        listaFuturos = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         tfPesquisa = new javax.swing.JTextField();
         lblDataHoje = new javax.swing.JLabel();
         lblSaldoAtual = new javax.swing.JLabel();
         lblSaldoTotal = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        listaCategorias = new javax.swing.JPanel();
         Receitas = new javax.swing.JPanel();
         tfPesquisa1 = new javax.swing.JTextField();
         lblDataHoje1 = new javax.swing.JLabel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel5 = new javax.swing.JPanel();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        listaTodasReceitas = new Trabalho.view.ListaLancamento<>();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        listaTodasReceitas = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
-        jScrollPane7 = new javax.swing.JScrollPane();
-        listaLancadasReceitas = new Trabalho.view.ListaCategoria<>();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        listaLancadasReceitas = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
-        jScrollPane8 = new javax.swing.JScrollPane();
-        listaFuturasReceitas = new Trabalho.view.ListaLancamento<>();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        listaFuturasReceitas = new javax.swing.JPanel();
         lblSaldoAtual1 = new javax.swing.JLabel();
         lblSaldoTotal1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jScrollPane9 = new javax.swing.JScrollPane();
-        listaCategoriaReceita = new Trabalho.view.ListaCategoria<>();
         jLabel4 = new javax.swing.JLabel();
         tfAdicionarCategoriaReceita = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         btnAdicionarReceita = new javax.swing.JButton();
+        jScrollPane12 = new javax.swing.JScrollPane();
+        listaCategoriasReceitas = new javax.swing.JPanel();
         Despesas = new javax.swing.JPanel();
         tfPesquisaCategoriaDespesa = new javax.swing.JTextField();
         lblDataHoje2 = new javax.swing.JLabel();
         jTabbedPane5 = new javax.swing.JTabbedPane();
         jPanel10 = new javax.swing.JPanel();
-        jScrollPane12 = new javax.swing.JScrollPane();
-        listaTodasDespesas = new Trabalho.view.ListaLancamento<>();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        listaTodasDespesas = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
-        jScrollPane13 = new javax.swing.JScrollPane();
-        listaLancadasDespesas = new Trabalho.view.ListaCategoria<>();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        listaLancadasDespesas = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
-        jScrollPane14 = new javax.swing.JScrollPane();
-        listaFuturasDespesas = new Trabalho.view.ListaLancamento<>();
+        jScrollPane10 = new javax.swing.JScrollPane();
+        listaFuturasDespesas = new javax.swing.JPanel();
         lblSaldoAtual2 = new javax.swing.JLabel();
         lblSaldoTotal2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jScrollPane15 = new javax.swing.JScrollPane();
-        listaCategoriaDespesa = new Trabalho.view.ListaCategoria<>();
         jLabel6 = new javax.swing.JLabel();
         tfAdicionarCategoriaDespesa = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         btnAdicionarDespesa = new javax.swing.JButton();
+        jScrollPane11 = new javax.swing.JScrollPane();
+        listaCategoriasDespesas = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -143,7 +170,9 @@ public class LancamentosView extends javax.swing.JFrame {
 
         jPanel2.setForeground(new java.awt.Color(153, 153, 153));
 
-        jScrollPane3.setViewportView(listaTodos);
+        listaTodos.setBackground(new java.awt.Color(255, 255, 255));
+        listaTodos.setLayout(new javax.swing.BoxLayout(listaTodos, javax.swing.BoxLayout.Y_AXIS));
+        jScrollPane.setViewportView(listaTodos);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -151,14 +180,14 @@ public class LancamentosView extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
+                .addComponent(jScrollPane)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
+                .addComponent(jScrollPane)
                 .addContainerGap())
         );
 
@@ -166,7 +195,9 @@ public class LancamentosView extends javax.swing.JFrame {
 
         jPanel3.setForeground(new java.awt.Color(153, 153, 153));
 
-        jScrollPane4.setViewportView(listaLancados);
+        listaLancados.setBackground(new java.awt.Color(255, 255, 255));
+        listaLancados.setLayout(new javax.swing.BoxLayout(listaLancados, javax.swing.BoxLayout.Y_AXIS));
+        jScrollPane1.setViewportView(listaLancados);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -174,14 +205,14 @@ public class LancamentosView extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addContainerGap())
         );
 
@@ -189,7 +220,9 @@ public class LancamentosView extends javax.swing.JFrame {
 
         jPanel4.setForeground(new java.awt.Color(153, 153, 153));
 
-        jScrollPane5.setViewportView(listaFuturos);
+        listaFuturos.setBackground(new java.awt.Color(255, 255, 255));
+        listaFuturos.setLayout(new javax.swing.BoxLayout(listaFuturos, javax.swing.BoxLayout.Y_AXIS));
+        jScrollPane3.setViewportView(listaFuturos);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -197,14 +230,14 @@ public class LancamentosView extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
+                .addComponent(jScrollPane3)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
+                .addComponent(jScrollPane3)
                 .addContainerGap())
         );
 
@@ -213,8 +246,6 @@ public class LancamentosView extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Categorias");
-
-        jScrollPane1.setViewportView(listaCategoria);
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
@@ -238,6 +269,21 @@ public class LancamentosView extends javax.swing.JFrame {
         lblSaldoTotal.setText("Saldo total:");
         lblSaldoTotal.setToolTipText("Saldo disponível independente do período");
 
+        listaCategorias.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout listaCategoriasLayout = new javax.swing.GroupLayout(listaCategorias);
+        listaCategorias.setLayout(listaCategoriasLayout);
+        listaCategoriasLayout.setHorizontalGroup(
+            listaCategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 353, Short.MAX_VALUE)
+        );
+        listaCategoriasLayout.setVerticalGroup(
+            listaCategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 351, Short.MAX_VALUE)
+        );
+
+        jScrollPane4.setViewportView(listaCategorias);
+
         javax.swing.GroupLayout GeralLayout = new javax.swing.GroupLayout(Geral);
         Geral.setLayout(GeralLayout);
         GeralLayout.setHorizontalGroup(
@@ -246,25 +292,20 @@ public class LancamentosView extends javax.swing.JFrame {
                 .addGap(50, 50, 50)
                 .addGroup(GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(GeralLayout.createSequentialGroup()
-                        .addComponent(jTabbedPane1)
-                        .addGap(18, 18, 18)
-                        .addGroup(GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(GeralLayout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 238, Short.MAX_VALUE))
-                            .addGroup(GeralLayout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addGroup(GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tfPesquisa)
-                                    .addComponent(jScrollPane1)))))
-                    .addGroup(GeralLayout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(125, 125, 125)
                         .addGroup(GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblSaldoAtual)
                             .addComponent(lblSaldoTotal))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblDataHoje)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 218, Short.MAX_VALUE)
+                        .addComponent(lblDataHoje))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, GeralLayout.createSequentialGroup()
+                        .addComponent(jTabbedPane1)
+                        .addGap(18, 18, 18)
+                        .addGroup(GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tfPesquisa)
+                            .addComponent(jLabel1)
+                            .addComponent(jScrollPane4))))
                 .addGap(24, 24, 24))
         );
         GeralLayout.setVerticalGroup(
@@ -283,8 +324,8 @@ public class LancamentosView extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tfPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane4))
                     .addComponent(jTabbedPane1))
                 .addGap(37, 37, 37))
         );
@@ -306,7 +347,9 @@ public class LancamentosView extends javax.swing.JFrame {
 
         jPanel5.setForeground(new java.awt.Color(153, 153, 153));
 
-        jScrollPane6.setViewportView(listaTodasReceitas);
+        listaTodasReceitas.setBackground(new java.awt.Color(255, 255, 255));
+        listaTodasReceitas.setLayout(new javax.swing.BoxLayout(listaTodasReceitas, javax.swing.BoxLayout.Y_AXIS));
+        jScrollPane5.setViewportView(listaTodasReceitas);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -314,14 +357,14 @@ public class LancamentosView extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
+                .addComponent(jScrollPane5)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
+                .addComponent(jScrollPane5)
                 .addContainerGap())
         );
 
@@ -329,7 +372,9 @@ public class LancamentosView extends javax.swing.JFrame {
 
         jPanel6.setForeground(new java.awt.Color(153, 153, 153));
 
-        jScrollPane7.setViewportView(listaLancadasReceitas);
+        listaLancadasReceitas.setBackground(new java.awt.Color(255, 255, 255));
+        listaLancadasReceitas.setLayout(new javax.swing.BoxLayout(listaLancadasReceitas, javax.swing.BoxLayout.Y_AXIS));
+        jScrollPane6.setViewportView(listaLancadasReceitas);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -337,14 +382,14 @@ public class LancamentosView extends javax.swing.JFrame {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
+                .addComponent(jScrollPane6)
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
+                .addComponent(jScrollPane6)
                 .addContainerGap())
         );
 
@@ -352,7 +397,9 @@ public class LancamentosView extends javax.swing.JFrame {
 
         jPanel7.setForeground(new java.awt.Color(153, 153, 153));
 
-        jScrollPane8.setViewportView(listaFuturasReceitas);
+        listaFuturasReceitas.setBackground(new java.awt.Color(255, 255, 255));
+        listaFuturasReceitas.setLayout(new javax.swing.BoxLayout(listaFuturasReceitas, javax.swing.BoxLayout.Y_AXIS));
+        jScrollPane7.setViewportView(listaFuturasReceitas);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -360,12 +407,15 @@ public class LancamentosView extends javax.swing.JFrame {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
+                .addComponent(jScrollPane7)
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane7)
+                .addContainerGap())
         );
 
         jTabbedPane2.addTab("Futuras", jPanel7);
@@ -384,8 +434,6 @@ public class LancamentosView extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Categorias");
 
-        jScrollPane9.setViewportView(listaCategoriaReceita);
-
         jLabel4.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Receitas");
@@ -395,6 +443,7 @@ public class LancamentosView extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jButton1.setText("+");
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         btnAdicionarReceita.setBackground(new java.awt.Color(33, 33, 33));
@@ -425,6 +474,21 @@ public class LancamentosView extends javax.swing.JFrame {
             }
         });
 
+        listaCategoriasReceitas.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout listaCategoriasReceitasLayout = new javax.swing.GroupLayout(listaCategoriasReceitas);
+        listaCategoriasReceitas.setLayout(listaCategoriasReceitasLayout);
+        listaCategoriasReceitasLayout.setHorizontalGroup(
+            listaCategoriasReceitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 351, Short.MAX_VALUE)
+        );
+        listaCategoriasReceitasLayout.setVerticalGroup(
+            listaCategoriasReceitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 266, Short.MAX_VALUE)
+        );
+
+        jScrollPane12.setViewportView(listaCategoriasReceitas);
+
         javax.swing.GroupLayout ReceitasLayout = new javax.swing.GroupLayout(Receitas);
         Receitas.setLayout(ReceitasLayout);
         ReceitasLayout.setHorizontalGroup(
@@ -438,21 +502,21 @@ public class LancamentosView extends javax.swing.JFrame {
                         .addGroup(ReceitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblSaldoAtual1)
                             .addComponent(lblSaldoTotal1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 212, Short.MAX_VALUE)
                         .addComponent(lblDataHoje1))
                     .addGroup(ReceitasLayout.createSequentialGroup()
                         .addGroup(ReceitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTabbedPane2)
                             .addComponent(btnAdicionarReceita, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(ReceitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(ReceitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(tfPesquisa1)
                             .addGroup(ReceitasLayout.createSequentialGroup()
-                                .addComponent(tfAdicionarCategoriaReceita)
+                                .addComponent(tfAdicionarCategoriaReceita, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
-                            .addComponent(jLabel3))))
+                            .addComponent(jLabel3)
+                            .addComponent(jScrollPane12))))
                 .addGap(24, 24, 24))
         );
         ReceitasLayout.setVerticalGroup(
@@ -476,7 +540,7 @@ public class LancamentosView extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(tfPesquisa1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane9)
+                        .addComponent(jScrollPane12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(ReceitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -506,7 +570,9 @@ public class LancamentosView extends javax.swing.JFrame {
 
         jPanel10.setForeground(new java.awt.Color(153, 153, 153));
 
-        jScrollPane12.setViewportView(listaTodasDespesas);
+        listaTodasDespesas.setBackground(new java.awt.Color(255, 255, 255));
+        listaTodasDespesas.setLayout(new javax.swing.BoxLayout(listaTodasDespesas, javax.swing.BoxLayout.Y_AXIS));
+        jScrollPane8.setViewportView(listaTodasDespesas);
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -514,14 +580,14 @@ public class LancamentosView extends javax.swing.JFrame {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane12, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
+                .addComponent(jScrollPane8)
                 .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane12, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+                .addComponent(jScrollPane8)
                 .addContainerGap())
         );
 
@@ -529,7 +595,9 @@ public class LancamentosView extends javax.swing.JFrame {
 
         jPanel11.setForeground(new java.awt.Color(153, 153, 153));
 
-        jScrollPane13.setViewportView(listaLancadasDespesas);
+        listaLancadasDespesas.setBackground(new java.awt.Color(255, 255, 255));
+        listaLancadasDespesas.setLayout(new javax.swing.BoxLayout(listaLancadasDespesas, javax.swing.BoxLayout.Y_AXIS));
+        jScrollPane9.setViewportView(listaLancadasDespesas);
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -537,14 +605,14 @@ public class LancamentosView extends javax.swing.JFrame {
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane13, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
+                .addComponent(jScrollPane9)
                 .addContainerGap())
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane13, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+                .addComponent(jScrollPane9)
                 .addContainerGap())
         );
 
@@ -552,7 +620,9 @@ public class LancamentosView extends javax.swing.JFrame {
 
         jPanel12.setForeground(new java.awt.Color(153, 153, 153));
 
-        jScrollPane14.setViewportView(listaFuturasDespesas);
+        listaFuturasDespesas.setBackground(new java.awt.Color(255, 255, 255));
+        listaFuturasDespesas.setLayout(new javax.swing.BoxLayout(listaFuturasDespesas, javax.swing.BoxLayout.Y_AXIS));
+        jScrollPane10.setViewportView(listaFuturasDespesas);
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -560,14 +630,14 @@ public class LancamentosView extends javax.swing.JFrame {
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane14, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
+                .addComponent(jScrollPane10)
                 .addContainerGap())
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
+            .addGroup(jPanel12Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane14, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+                .addComponent(jScrollPane10)
                 .addContainerGap())
         );
 
@@ -587,8 +657,6 @@ public class LancamentosView extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Categorias");
 
-        jScrollPane15.setViewportView(listaCategoriaDespesa);
-
         jLabel6.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Despesas");
@@ -598,6 +666,7 @@ public class LancamentosView extends javax.swing.JFrame {
 
         jButton2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jButton2.setText("+");
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         btnAdicionarDespesa.setBackground(new java.awt.Color(33, 33, 33));
@@ -628,6 +697,21 @@ public class LancamentosView extends javax.swing.JFrame {
             }
         });
 
+        listaCategoriasDespesas.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout listaCategoriasDespesasLayout = new javax.swing.GroupLayout(listaCategoriasDespesas);
+        listaCategoriasDespesas.setLayout(listaCategoriasDespesasLayout);
+        listaCategoriasDespesasLayout.setHorizontalGroup(
+            listaCategoriasDespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 344, Short.MAX_VALUE)
+        );
+        listaCategoriasDespesasLayout.setVerticalGroup(
+            listaCategoriasDespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 281, Short.MAX_VALUE)
+        );
+
+        jScrollPane11.setViewportView(listaCategoriasDespesas);
+
         javax.swing.GroupLayout DespesasLayout = new javax.swing.GroupLayout(Despesas);
         Despesas.setLayout(DespesasLayout);
         DespesasLayout.setHorizontalGroup(
@@ -641,21 +725,21 @@ public class LancamentosView extends javax.swing.JFrame {
                         .addGroup(DespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblSaldoAtual2)
                             .addComponent(lblSaldoTotal2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 201, Short.MAX_VALUE)
                         .addComponent(lblDataHoje2))
                     .addGroup(DespesasLayout.createSequentialGroup()
                         .addGroup(DespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTabbedPane5)
                             .addComponent(btnAdicionarDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(DespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane15, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE)
+                        .addGroup(DespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(tfPesquisaCategoriaDespesa)
                             .addComponent(jLabel5)
                             .addGroup(DespesasLayout.createSequentialGroup()
-                                .addComponent(tfAdicionarCategoriaDespesa)
+                                .addComponent(tfAdicionarCategoriaDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane11))))
                 .addGap(24, 24, 24))
         );
         DespesasLayout.setVerticalGroup(
@@ -679,7 +763,7 @@ public class LancamentosView extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(tfPesquisaCategoriaDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane15))
+                        .addComponent(jScrollPane11))
                     .addComponent(jTabbedPane5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(DespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -847,11 +931,11 @@ public class LancamentosView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JScrollPane jScrollPane;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane10;
+    private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane12;
-    private javax.swing.JScrollPane jScrollPane13;
-    private javax.swing.JScrollPane jScrollPane14;
-    private javax.swing.JScrollPane jScrollPane15;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -872,18 +956,18 @@ public class LancamentosView extends javax.swing.JFrame {
     private javax.swing.JLabel lblSaldoTotal;
     private javax.swing.JLabel lblSaldoTotal1;
     private javax.swing.JLabel lblSaldoTotal2;
-    private Trabalho.view.ListaCategoria<String> listaCategoria;
-    private Trabalho.view.ListaCategoria<String> listaCategoriaDespesa;
-    private Trabalho.view.ListaCategoria<String> listaCategoriaReceita;
-    private Trabalho.view.ListaLancamento<String> listaFuturasDespesas;
-    private Trabalho.view.ListaLancamento<String> listaFuturasReceitas;
-    private Trabalho.view.ListaLancamento<String> listaFuturos;
-    private Trabalho.view.ListaCategoria<String> listaLancadasDespesas;
-    private Trabalho.view.ListaCategoria<String> listaLancadasReceitas;
-    private Trabalho.view.ListaCategoria<String> listaLancados;
-    private Trabalho.view.ListaLancamento<String> listaTodasDespesas;
-    private Trabalho.view.ListaLancamento<String> listaTodasReceitas;
-    private Trabalho.view.ListaLancamento<String> listaTodos;
+    private javax.swing.JPanel listaCategorias;
+    private javax.swing.JPanel listaCategoriasDespesas;
+    private javax.swing.JPanel listaCategoriasReceitas;
+    private javax.swing.JPanel listaFuturasDespesas;
+    private javax.swing.JPanel listaFuturasReceitas;
+    private javax.swing.JPanel listaFuturos;
+    private javax.swing.JPanel listaLancadasDespesas;
+    private javax.swing.JPanel listaLancadasReceitas;
+    private javax.swing.JPanel listaLancados;
+    private javax.swing.JPanel listaTodasDespesas;
+    private javax.swing.JPanel listaTodasReceitas;
+    private javax.swing.JPanel listaTodos;
     private javax.swing.JTextField tfAdicionarCategoriaDespesa;
     private javax.swing.JTextField tfAdicionarCategoriaReceita;
     private javax.swing.JTextField tfPesquisa;
@@ -915,5 +999,14 @@ public class LancamentosView extends javax.swing.JFrame {
         
     }
 
+    public void inicializarListas(){
+     
+        for (Lancamento lancamento : controller.getLancamentos()){
+            
+            listaTodos.add(new ItemLancamento(lancamento, controller));
+            
+        }
+        
+    }
 
 }
