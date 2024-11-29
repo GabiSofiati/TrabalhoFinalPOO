@@ -161,58 +161,7 @@ public class LancamentoControllerTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-
-    /**
-     * Test of getDiretorioSalvamento method, of class LancamentoController.
-     */
-    @Test
-    public void testGetDiretorioSalvamento() {
-        System.out.println("getDiretorioSalvamento");
-        LancamentoController instance = new LancamentoController();
-        String expResult = "";
-        String result = instance.getDiretorioSalvamento();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setDiretorioSalvamento method, of class LancamentoController.
-     */
-    @Test
-    public void testSetDiretorioSalvamento() {
-        System.out.println("setDiretorioSalvamento");
-        String diretorioSalvamento = "";
-        LancamentoController instance = new LancamentoController();
-        instance.setDiretorioSalvamento(diretorioSalvamento);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of carregarDiretorioSalvamento method, of class LancamentoController.
-     */
-    @Test
-    public void testCarregarDiretorioSalvamento() {
-        System.out.println("carregarDiretorioSalvamento");
-        LancamentoController instance = new LancamentoController();
-        instance.carregarDiretorioSalvamento();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of salvarDiretorioSalvamento method, of class LancamentoController.
-     */
-    @Test
-    public void testSalvarDiretorioSalvamento() {
-        System.out.println("salvarDiretorioSalvamento");
-        LancamentoController instance = new LancamentoController();
-        instance.salvarDiretorioSalvamento();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
+    
     /**
      * Test of calcularSaldo method, of class LancamentoController.
      */
