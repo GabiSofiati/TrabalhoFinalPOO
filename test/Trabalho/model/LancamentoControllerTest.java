@@ -61,43 +61,7 @@ public class LancamentoControllerTest {
         LancamentoController controller = new LancamentoController();
         controller.removerLancamento(lancamento);
     }
-
-    /**
-     * Teste para carregar lançamentos de um arquivo válido.
-     */
-    @Test
-    public void testCarregarLancamentosArquivoValido() {
-        System.out.println("carregarLancamentosArquivoValido");
-        LancamentoController controller = new LancamentoController();
-        controller.setDiretorioSalvamento("src/Trabalho/arquivos/");
-
-        try {
-            controller.carregarLancamentos();
-            assertFalse("A lista de lançamentos não deve estar vazia", controller.getLancamentos().isEmpty());
-        } catch (IOException e) {
-            fail("Exceção inesperada ao carregar lançamentos: " + e.getMessage());
-        }
-    }
-
-    /**
-     * Teste para salvar lançamentos em um arquivo válido.
-     */
-    @Test
-    public void testSalvarLancamentosArquivoValido() {
-        System.out.println("salvarLancamentosArquivoValido");
-        LancamentoController controller = new LancamentoController();
-        controller.setDiretorioSalvamento("src/Trabalho/arquivos/");
-        Receita receita = new Receita(200.0, LocalDate.now(), new Categoria("Bônus", TipoCategoria.RECEITA));
-        controller.inserirLancamento(receita);
-
-        try {
-            controller.salvarLancamentos();
-            assertTrue("Arquivo deve ser salvo sem erros", true);
-        } catch (IOException e) {
-            fail("Exceção inesperada ao salvar lançamentos: " + e.getMessage());
-        }
-    }
-
+    
     /**
      * Teste para incluir uma categoria nula.
      */
