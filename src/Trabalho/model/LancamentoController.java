@@ -61,20 +61,21 @@ public class LancamentoController {
         lancamentos.clear();
         File arquivo = new File("src/Trabalho/arquivos/lancamentos.csv");
         
-        try (Scanner arqTexto = new Scanner(arquivo)){
-            while (arqTexto.hasNext()){
-                String[] lancamento = arqTexto.nextLine().split(",");
-                switch(lancamento[3]){
-                   case "RECEITA" -> lancamentos.add(new Receita(Double.parseDouble(lancamento[0]), LocalDate.parse(lancamento[1]), new Categoria(lancamento[2], TipoCategoria.RECEITA)));
-                   case "DESPESA" -> lancamentos.add(new Despesa(Double.parseDouble(lancamento[0]), LocalDate.parse(lancamento[1]), new Categoria(lancamento[2], TipoCategoria.DESPESA)));
+        if(arquivo.exists()){
+            try (Scanner arqTexto = new Scanner(arquivo)){
+                while (arqTexto.hasNext()){
+                    String[] lancamento = arqTexto.nextLine().split(",");
+                    switch(lancamento[3]){
+                       case "RECEITA" -> lancamentos.add(new Receita(Double.parseDouble(lancamento[0]), LocalDate.parse(lancamento[1]), new Categoria(lancamento[2], TipoCategoria.RECEITA)));
+                       case "DESPESA" -> lancamentos.add(new Despesa(Double.parseDouble(lancamento[0]), LocalDate.parse(lancamento[1]), new Categoria(lancamento[2], TipoCategoria.DESPESA)));
+                    }
                 }
+            } catch (IOException e) {
+
+                System.out.println("Erro ao carregar arquivos " + e.toString());
+
             }
-        } catch (IOException e) {
-
-            System.out.println("Erro ao carregar arquivos " + e.toString());
-
         }
-        
     }
     
     /**
@@ -137,16 +138,18 @@ public class LancamentoController {
         categorias.clear();
         File arquivo = new File("src/Trabalho/arquivos/categorias.csv");
         
-        try (Scanner arqTexto = new Scanner(arquivo)){
-            while (arqTexto.hasNext()){
-                String[] categoria = arqTexto.nextLine().split(",");
-                switch(categoria[1]){
-                   case "RECEITA" -> categorias.add(new Categoria(categoria[0], TipoCategoria.RECEITA));
-                   case "DESPESA" -> categorias.add(new Categoria(categoria[0], TipoCategoria.DESPESA));
+        if(arquivo.exists()){
+            try (Scanner arqTexto = new Scanner(arquivo)){
+                while (arqTexto.hasNext()){
+                    String[] categoria = arqTexto.nextLine().split(",");
+                    switch(categoria[1]){
+                       case "RECEITA" -> categorias.add(new Categoria(categoria[0], TipoCategoria.RECEITA));
+                       case "DESPESA" -> categorias.add(new Categoria(categoria[0], TipoCategoria.DESPESA));
+                    }
                 }
+            } catch (IOException e) {
+                System.out.println("Erro ao carregar arquivos " + e.getMessage());
             }
-        } catch (IOException e) {
-            System.out.println("Erro ao carregar arquivos " + e.getMessage());
         }
     }
     

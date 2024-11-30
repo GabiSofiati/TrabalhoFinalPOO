@@ -9,16 +9,10 @@ import Trabalho.model.Lancamento;
 import Trabalho.model.LancamentoController;
 import Trabalho.model.Receita;
 import java.awt.Color;
-import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.text.NumberFormat;
 import java.time.LocalDate;
-import javax.swing.plaf.ListUI;
-import javax.swing.plaf.PanelUI;
 
 /**
  *
