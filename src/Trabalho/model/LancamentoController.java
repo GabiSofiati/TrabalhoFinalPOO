@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * A classe LancamentoController controla os lancamentos e o salvamento de arquivos na memoria e tambem calcula o saldo disponível em um periodo definido.
+ * A classe LancamentoController controla os lancamentos, as categorias e o salvamento de arquivos na memoria e tambem calcula o saldo disponível em um periodo definido.
  *
  * @author Paulo Fontenele da Silva
  */
@@ -46,8 +46,8 @@ public class LancamentoController {
     }
     
     /**
-     * Retorna a lista de lançamentos
-     * @return ArrayList<Lancamento> lista de lançamentos
+     * Retorna o ArrayList de lançamentos
+     * @return o ArrayList de lançamentos
      */
     public ArrayList<Lancamento> getLancamentos(){
         return lancamentos;
@@ -130,8 +130,8 @@ public class LancamentoController {
     }
     
     /**
-     * Retorna a lista de categorias
-     * @return ArrayList<Categoria> a lista de categorias
+     * Retorna o ArrayList de categorias
+     * @return o ArrayList de categorias
      */
     public ArrayList<Categoria> getCategorias(){
         return this.categorias;
@@ -186,7 +186,7 @@ public class LancamentoController {
      * 
      * @param desde inicio do periodo, null para inicio indefinido
      * @param ate fim do periodo, null para fim indefinido
-     * @return double o saldo disponível no período determinado
+     * @return o saldo disponível no período determinado
      */
     public double calcularSaldo(LocalDate desde, LocalDate ate){
         

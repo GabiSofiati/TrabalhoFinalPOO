@@ -16,27 +16,55 @@ public class Lancamento implements Comparable<Lancamento>{
     private double valor;
     private LocalDate data;
 
+    /**
+     * Construtor da classe Lancamento
+     * @param valor o valor do lancamento
+     * @param data a data em que aconteceu o lancamento
+     */
     public Lancamento(double valor, LocalDate data) {
         this.valor = valor;
         this.data = data;
     }
     
+    /**
+     * @return o valor do lancamento
+     */
     public double getValor() {
         return valor;
     }
 
+    /**
+     * @param valor o valor do lancamento
+     */
     public void setValor(double valor) {
         this.valor = valor;
     }
 
+    /**
+     * @return a data em que aconteceu o lancamento
+     */
     public LocalDate getData() {
         return data;
     }
 
+    /**
+     * @param data a data em que aconteceu o lancamento
+     */
     public void setData(LocalDate data) {
         this.data = data;
     }
 
+    /**
+     * Compara dois lancamento na seguinte ordem:
+     * 
+     * 1. Data
+     * 2. Despesa
+     * 3. Receita
+     * 4. Valor
+     * 
+     * @param o o outro lancamento para ser comparado
+     * @return o resultado da comparacao
+     */
     @Override
     public int compareTo(Lancamento o) {
         
@@ -45,7 +73,6 @@ public class Lancamento implements Comparable<Lancamento>{
         if (result != 0) {
             return result;
         }
-        
         
         if (this instanceof Despesa && o instanceof Receita) {
             return 1; //despesa primeiro
