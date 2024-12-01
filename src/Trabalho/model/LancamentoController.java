@@ -193,7 +193,6 @@ public class LancamentoController {
         double saldo = 0;
         
         for(Lancamento lancamento : getLancamentos()){
-            
             if(desde != null && ate != null){
                 int cmpDesde = lancamento.getData().compareTo(desde);
                 int cmpAte = lancamento.getData().compareTo(ate);
