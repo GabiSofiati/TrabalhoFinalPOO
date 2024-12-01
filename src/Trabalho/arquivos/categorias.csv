@@ -1,7 +1,30 @@
-categoria,DESPESA
-categoria,RECEITA
-gasto desnecessario,DESPESA
+água,DESPESA
+aluguéis recebidos,RECEITA
+aluguel,DESPESA
+assinaturas,DESPESA
+bonus anual,RECEITA
+celular,DESPESA
+comissões,RECEITA
+diárias,RECEITA
+educação,DESPESA
+freelance,RECEITA
+herança,RECEITA
+imprevistos,DESPESA
+internet,DESPESA
+investimentos,RECEITA
+lazer,DESPESA
+luz,DESPESA
 mercado,DESPESA
-salario,RECEITA
-teste2,RECEITA
-teste3,DESPESA
+mesada,RECEITA
+pensões,RECEITA
+prêmios,RECEITA
+presentes,DESPESA
+receita extra,RECEITA
+reembolso,RECEITA
+rendimentos,RECEITA
+restaurantes,DESPESA
+roupas,DESPESA
+salário,RECEITA
+saúde,DESPESA
+transporte,DESPESA
+venda de objetos,RECEITA
