@@ -10,8 +10,17 @@ import Trabalho.model.Lancamento;
 import Trabalho.model.LancamentoController;
 import Trabalho.model.Receita;
 import Trabalho.model.TipoCategoria;
+import static Trabalho.model.TipoCategoria.DESPESA;
+import static Trabalho.model.TipoCategoria.RECEITA;
 import java.awt.Color;
+import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import javax.swing.BorderFactory;
+import javax.swing.JFrame;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -21,13 +30,43 @@ import javax.swing.event.ListSelectionListener;
  */
 public class LancamentosView extends javax.swing.JFrame {
 
-    LancamentoController controller = new LancamentoController();
+    private LancamentoController controller = new LancamentoController();
+    
+    private boolean digitadoCategoriaGeral = false;
+    private boolean digitadoCategoriaReceita = false;
+    private boolean digitadoCategoriaDespesa = false;
+    
+    private ArrayList<Categoria> categoriasSelectionadasGeral = new ArrayList<>();
+    private ArrayList<Categoria> categoriasSelectionadasReceitas = new ArrayList<>();
+    private ArrayList<Categoria> categoriasSelectionadasDespesas = new ArrayList<>();
+    
+    public ArrayList<Categoria> getCategoriasSelectionadasGeral() {
+        return categoriasSelectionadasGeral;
+    }
+
+    public ArrayList<Categoria> getCategoriasSelectionadasReceitas() {
+        return categoriasSelectionadasReceitas;
+    }
+
+    public ArrayList<Categoria> getCategoriasSelectionadasDespesas() {
+        return categoriasSelectionadasDespesas;
+    }
     
     /**
      * Creates new form FinancasView
      */
     public LancamentosView() {
         initComponents();
+        
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        
+        controller.carregarLancamentos();
+        controller.carregarCategorias();
+        
+        LocalDate hoje = LocalDate.now();
+        lblDataHoje.setText("Hoje: " + hoje.getDayOfMonth() + "/" + hoje.getMonthValue() + "/" + hoje.getYear());
+        lblDataHoje1.setText("Hoje: " + hoje.getDayOfMonth() + "/" + hoje.getMonthValue() + "/" + hoje.getYear());
+        lblDataHoje2.setText("Hoje: " + hoje.getDayOfMonth() + "/" + hoje.getMonthValue() + "/" + hoje.getYear());
         
         jScrollPane.getVerticalScrollBar().setUnitIncrement(15);
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(15);
@@ -43,10 +82,7 @@ public class LancamentosView extends javax.swing.JFrame {
         jScrollPane11.getVerticalScrollBar().setUnitIncrement(15);
         jScrollPane12.getVerticalScrollBar().setUnitIncrement(15);
         
-        Menu.addItem(new ItemMenu("Geral"));
-        Menu.addItem(new ItemMenu("Receitas"));
-        Menu.addItem(new ItemMenu("Despesas"));
-        Menu.setSelectedIndex(0);
+        Geral();
         
         Menu.addListSelectionListener(new ListSelectionListener() {
             @Override
@@ -59,13 +95,9 @@ public class LancamentosView extends javax.swing.JFrame {
             }
         });
         
-        controller.inserirLancamento(new Receita(230.99, LocalDate.now(), new Categoria("Teste", TipoCategoria.RECEITA)));
-        controller.inserirLancamento(new Despesa(150.99, LocalDate.now().plusDays(2), new Categoria("Teste", TipoCategoria.DESPESA)));
-        controller.inserirLancamento(new Receita(250.99, LocalDate.now().plusDays(3), new Categoria("Teste", TipoCategoria.RECEITA)));
-        controller.inserirLancamento(new Despesa(150.99, LocalDate.now().plusDays(4), new Categoria("Teste", TipoCategoria.DESPESA)));
         
-        
-        inicializarListas();
+        atualizarListaCategoria();
+        atualizarListas();
         
     }
 
@@ -79,8 +111,6 @@ public class LancamentosView extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        Menu = new Trabalho.view.ListaMenu<>();
         Geral = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
@@ -101,7 +131,7 @@ public class LancamentosView extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         listaCategorias = new javax.swing.JPanel();
         Receitas = new javax.swing.JPanel();
-        tfPesquisa1 = new javax.swing.JTextField();
+        tfPesquisaCategoriaReceita = new javax.swing.JTextField();
         lblDataHoje1 = new javax.swing.JLabel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel5 = new javax.swing.JPanel();
@@ -118,7 +148,7 @@ public class LancamentosView extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         tfAdicionarCategoriaReceita = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnAdicionarCategoriaReceita = new javax.swing.JButton();
         btnAdicionarReceita = new javax.swing.JButton();
         jScrollPane12 = new javax.swing.JScrollPane();
         listaCategoriasReceitas = new javax.swing.JPanel();
@@ -140,26 +170,21 @@ public class LancamentosView extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         tfAdicionarCategoriaDespesa = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        btnAdicionarCategoriaDespesa = new javax.swing.JButton();
         btnAdicionarDespesa = new javax.swing.JButton();
         jScrollPane11 = new javax.swing.JScrollPane();
         listaCategoriasDespesas = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        Menu = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Gerenciador de Finanças");
         setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.setFont(new java.awt.Font("Calibri", 1, 24)); // NOI18N
-
-        jScrollPane2.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
-
-        Menu.setBackground(new java.awt.Color(204, 204, 204));
-        Menu.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 0, 0, 0));
-        Menu.setForeground(new java.awt.Color(0, 0, 0));
-        Menu.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane2.setViewportView(Menu);
 
         Geral.setBackground(new java.awt.Color(255, 255, 255));
         Geral.setForeground(new java.awt.Color(255, 255, 255));
@@ -253,6 +278,11 @@ public class LancamentosView extends javax.swing.JFrame {
 
         tfPesquisa.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         tfPesquisa.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        tfPesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfPesquisaKeyReleased(evt);
+            }
+        });
 
         lblDataHoje.setFont(new java.awt.Font("Artifakt Element Hair", 0, 24)); // NOI18N
         lblDataHoje.setForeground(new java.awt.Color(0, 0, 0));
@@ -270,18 +300,7 @@ public class LancamentosView extends javax.swing.JFrame {
         lblSaldoTotal.setToolTipText("Saldo disponível independente do período");
 
         listaCategorias.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout listaCategoriasLayout = new javax.swing.GroupLayout(listaCategorias);
-        listaCategorias.setLayout(listaCategoriasLayout);
-        listaCategoriasLayout.setHorizontalGroup(
-            listaCategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 353, Short.MAX_VALUE)
-        );
-        listaCategoriasLayout.setVerticalGroup(
-            listaCategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 351, Short.MAX_VALUE)
-        );
-
+        listaCategorias.setLayout(new javax.swing.BoxLayout(listaCategorias, javax.swing.BoxLayout.Y_AXIS));
         jScrollPane4.setViewportView(listaCategorias);
 
         javax.swing.GroupLayout GeralLayout = new javax.swing.GroupLayout(Geral);
@@ -300,12 +319,12 @@ public class LancamentosView extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 218, Short.MAX_VALUE)
                         .addComponent(lblDataHoje))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, GeralLayout.createSequentialGroup()
-                        .addComponent(jTabbedPane1)
-                        .addGap(18, 18, 18)
-                        .addGroup(GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tfPesquisa)
-                            .addComponent(jLabel1)
-                            .addComponent(jScrollPane4))))
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane4)
+                            .addComponent(tfPesquisa, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE))))
                 .addGap(24, 24, 24))
         );
         GeralLayout.setVerticalGroup(
@@ -326,15 +345,20 @@ public class LancamentosView extends javax.swing.JFrame {
                         .addComponent(tfPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane4))
-                    .addComponent(jTabbedPane1))
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE))
                 .addGap(37, 37, 37))
         );
 
         Receitas.setBackground(new java.awt.Color(255, 255, 255));
         Receitas.setForeground(new java.awt.Color(255, 255, 255));
 
-        tfPesquisa1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        tfPesquisa1.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        tfPesquisaCategoriaReceita.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        tfPesquisaCategoriaReceita.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        tfPesquisaCategoriaReceita.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfPesquisaCategoriaReceitaKeyReleased(evt);
+            }
+        });
 
         lblDataHoje1.setFont(new java.awt.Font("Artifakt Element Hair", 0, 24)); // NOI18N
         lblDataHoje1.setForeground(new java.awt.Color(0, 0, 0));
@@ -357,7 +381,7 @@ public class LancamentosView extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane5)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -407,7 +431,7 @@ public class LancamentosView extends javax.swing.JFrame {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane7)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
@@ -441,10 +465,15 @@ public class LancamentosView extends javax.swing.JFrame {
         tfAdicionarCategoriaReceita.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         tfAdicionarCategoriaReceita.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
-        jButton1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jButton1.setText("+");
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnAdicionarCategoriaReceita.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnAdicionarCategoriaReceita.setText("+");
+        btnAdicionarCategoriaReceita.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAdicionarCategoriaReceita.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnAdicionarCategoriaReceita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionarCategoriaReceitaActionPerformed(evt);
+            }
+        });
 
         btnAdicionarReceita.setBackground(new java.awt.Color(33, 33, 33));
         btnAdicionarReceita.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -475,18 +504,7 @@ public class LancamentosView extends javax.swing.JFrame {
         });
 
         listaCategoriasReceitas.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout listaCategoriasReceitasLayout = new javax.swing.GroupLayout(listaCategoriasReceitas);
-        listaCategoriasReceitas.setLayout(listaCategoriasReceitasLayout);
-        listaCategoriasReceitasLayout.setHorizontalGroup(
-            listaCategoriasReceitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 351, Short.MAX_VALUE)
-        );
-        listaCategoriasReceitasLayout.setVerticalGroup(
-            listaCategoriasReceitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 266, Short.MAX_VALUE)
-        );
-
+        listaCategoriasReceitas.setLayout(new javax.swing.BoxLayout(listaCategoriasReceitas, javax.swing.BoxLayout.Y_AXIS));
         jScrollPane12.setViewportView(listaCategoriasReceitas);
 
         javax.swing.GroupLayout ReceitasLayout = new javax.swing.GroupLayout(Receitas);
@@ -502,21 +520,23 @@ public class LancamentosView extends javax.swing.JFrame {
                         .addGroup(ReceitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblSaldoAtual1)
                             .addComponent(lblSaldoTotal1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 212, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblDataHoje1))
                     .addGroup(ReceitasLayout.createSequentialGroup()
                         .addGroup(ReceitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTabbedPane2)
-                            .addComponent(btnAdicionarReceita, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(ReceitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tfPesquisa1)
                             .addGroup(ReceitasLayout.createSequentialGroup()
-                                .addComponent(tfAdicionarCategoriaReceita, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnAdicionarReceita, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jTabbedPane2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(ReceitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(ReceitasLayout.createSequentialGroup()
+                                .addComponent(tfAdicionarCategoriaReceita, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnAdicionarCategoriaReceita, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tfPesquisaCategoriaReceita, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3)
-                            .addComponent(jScrollPane12))))
+                            .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(24, 24, 24))
         );
         ReceitasLayout.setVerticalGroup(
@@ -538,12 +558,12 @@ public class LancamentosView extends javax.swing.JFrame {
                     .addGroup(ReceitasLayout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tfPesquisa1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tfPesquisaCategoriaReceita, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane12)
+                        .addComponent(jScrollPane12, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(ReceitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAdicionarCategoriaReceita, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tfAdicionarCategoriaReceita, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(2, 2, 2))
                     .addGroup(ReceitasLayout.createSequentialGroup()
@@ -558,6 +578,11 @@ public class LancamentosView extends javax.swing.JFrame {
 
         tfPesquisaCategoriaDespesa.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         tfPesquisaCategoriaDespesa.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        tfPesquisaCategoriaDespesa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfPesquisaCategoriaDespesaKeyReleased(evt);
+            }
+        });
 
         lblDataHoje2.setFont(new java.awt.Font("Artifakt Element Hair", 0, 24)); // NOI18N
         lblDataHoje2.setForeground(new java.awt.Color(0, 0, 0));
@@ -664,10 +689,15 @@ public class LancamentosView extends javax.swing.JFrame {
         tfAdicionarCategoriaDespesa.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         tfAdicionarCategoriaDespesa.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
-        jButton2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jButton2.setText("+");
-        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnAdicionarCategoriaDespesa.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnAdicionarCategoriaDespesa.setText("+");
+        btnAdicionarCategoriaDespesa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAdicionarCategoriaDespesa.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnAdicionarCategoriaDespesa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionarCategoriaDespesaActionPerformed(evt);
+            }
+        });
 
         btnAdicionarDespesa.setBackground(new java.awt.Color(33, 33, 33));
         btnAdicionarDespesa.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -698,18 +728,7 @@ public class LancamentosView extends javax.swing.JFrame {
         });
 
         listaCategoriasDespesas.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout listaCategoriasDespesasLayout = new javax.swing.GroupLayout(listaCategoriasDespesas);
-        listaCategoriasDespesas.setLayout(listaCategoriasDespesasLayout);
-        listaCategoriasDespesasLayout.setHorizontalGroup(
-            listaCategoriasDespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 344, Short.MAX_VALUE)
-        );
-        listaCategoriasDespesasLayout.setVerticalGroup(
-            listaCategoriasDespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 281, Short.MAX_VALUE)
-        );
-
+        listaCategoriasDespesas.setLayout(new javax.swing.BoxLayout(listaCategoriasDespesas, javax.swing.BoxLayout.Y_AXIS));
         jScrollPane11.setViewportView(listaCategoriasDespesas);
 
         javax.swing.GroupLayout DespesasLayout = new javax.swing.GroupLayout(Despesas);
@@ -721,25 +740,27 @@ public class LancamentosView extends javax.swing.JFrame {
                 .addGroup(DespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(DespesasLayout.createSequentialGroup()
                         .addComponent(jLabel6)
-                        .addGap(186, 186, 186)
+                        .addGap(175, 175, 175)
                         .addGroup(DespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblSaldoAtual2)
                             .addComponent(lblSaldoTotal2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 201, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblDataHoje2))
                     .addGroup(DespesasLayout.createSequentialGroup()
                         .addGroup(DespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTabbedPane5)
-                            .addComponent(btnAdicionarDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                            .addGroup(DespesasLayout.createSequentialGroup()
+                                .addComponent(btnAdicionarDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 342, Short.MAX_VALUE))
+                            .addComponent(jTabbedPane5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(DespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(tfPesquisaCategoriaDespesa)
                             .addComponent(jLabel5)
                             .addGroup(DespesasLayout.createSequentialGroup()
-                                .addComponent(tfAdicionarCategoriaDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tfAdicionarCategoriaDespesa)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane11))))
+                                .addComponent(btnAdicionarCategoriaDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(24, 24, 24))
         );
         DespesasLayout.setVerticalGroup(
@@ -764,14 +785,32 @@ public class LancamentosView extends javax.swing.JFrame {
                         .addComponent(tfPesquisaCategoriaDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane11))
-                    .addComponent(jTabbedPane5))
+                    .addComponent(jTabbedPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(DespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnAdicionarDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAdicionarCategoriaDespesa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(tfAdicionarCategoriaDespesa))
                 .addGap(47, 47, 47))
         );
+
+        jScrollPane2.setBackground(new java.awt.Color(204, 204, 204));
+        jScrollPane2.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+
+        Menu.setBackground(new java.awt.Color(204, 204, 204));
+        Menu.setBorder(javax.swing.BorderFactory.createEmptyBorder(40, 0, 0, 0));
+        Menu.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        Menu.setForeground(new java.awt.Color(0, 0, 0));
+        Menu.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Geral", "Receitas", "Despesas" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        Menu.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        Menu.setSelectedIndex(0);
+        Menu.setSelectionBackground(new java.awt.Color(255, 255, 255));
+        Menu.setSelectionForeground(new java.awt.Color(0, 0, 0));
+        jScrollPane2.setViewportView(Menu);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -795,11 +834,11 @@ public class LancamentosView extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(Geral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
@@ -826,49 +865,156 @@ public class LancamentosView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAdicionarReceitaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdicionarReceitaMouseEntered
-        btnAdicionarReceita.setBackground(new Color(50, 50, 50));
-    }//GEN-LAST:event_btnAdicionarReceitaMouseEntered
-
-    private void btnAdicionarReceitaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdicionarReceitaMouseExited
-        btnAdicionarReceita.setBackground(new Color(33, 33, 33));
-    }//GEN-LAST:event_btnAdicionarReceitaMouseExited
-
-    private void btnAdicionarReceitaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdicionarReceitaMousePressed
-        btnAdicionarReceita.setBackground(new Color(80, 80, 80));
-    }//GEN-LAST:event_btnAdicionarReceitaMousePressed
-
-    private void btnAdicionarReceitaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdicionarReceitaMouseReleased
-        btnAdicionarReceita.setBackground(new Color(33, 33, 33));
-    }//GEN-LAST:event_btnAdicionarReceitaMouseReleased
-
-    private void btnAdicionarDespesaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdicionarDespesaMouseEntered
-        btnAdicionarDespesa.setBackground(new Color(50, 50, 50));
-    }//GEN-LAST:event_btnAdicionarDespesaMouseEntered
-
-    private void btnAdicionarDespesaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdicionarDespesaMouseExited
-        btnAdicionarDespesa.setBackground(new Color(33, 33, 33));
-    }//GEN-LAST:event_btnAdicionarDespesaMouseExited
-
-    private void btnAdicionarDespesaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdicionarDespesaMousePressed
-        btnAdicionarDespesa.setBackground(new Color(80, 80, 80));
-    }//GEN-LAST:event_btnAdicionarDespesaMousePressed
+    private void btnAdicionarDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarDespesaActionPerformed
+        AdicionarLancamentoView popup = new AdicionarLancamentoView(controller, TipoCategoria.DESPESA, this, true);
+        popup.setLocationRelativeTo(this);
+        popup.setVisible(true);
+    }//GEN-LAST:event_btnAdicionarDespesaActionPerformed
 
     private void btnAdicionarDespesaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdicionarDespesaMouseReleased
         btnAdicionarDespesa.setBackground(new Color(33, 33, 33));
     }//GEN-LAST:event_btnAdicionarDespesaMouseReleased
 
-    private void btnAdicionarDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarDespesaActionPerformed
-        AdicionarLancamentoView popup = new AdicionarLancamentoView(TipoCategoria.DESPESA, this, true);
-        popup.setLocationRelativeTo(this);
-        popup.setVisible(true);
-    }//GEN-LAST:event_btnAdicionarDespesaActionPerformed
+    private void btnAdicionarDespesaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdicionarDespesaMousePressed
+        btnAdicionarDespesa.setBackground(new Color(80, 80, 80));
+    }//GEN-LAST:event_btnAdicionarDespesaMousePressed
+
+    private void btnAdicionarDespesaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdicionarDespesaMouseExited
+        btnAdicionarDespesa.setBackground(new Color(33, 33, 33));
+    }//GEN-LAST:event_btnAdicionarDespesaMouseExited
+
+    private void btnAdicionarDespesaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdicionarDespesaMouseEntered
+        btnAdicionarDespesa.setBackground(new Color(50, 50, 50));
+    }//GEN-LAST:event_btnAdicionarDespesaMouseEntered
 
     private void btnAdicionarReceitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarReceitaActionPerformed
-        AdicionarLancamentoView popup = new AdicionarLancamentoView(TipoCategoria.RECEITA, this, true);
+        AdicionarLancamentoView popup = new AdicionarLancamentoView(controller, TipoCategoria.RECEITA, this, true);
         popup.setLocationRelativeTo(this);
         popup.setVisible(true);
     }//GEN-LAST:event_btnAdicionarReceitaActionPerformed
+
+    private void btnAdicionarReceitaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdicionarReceitaMouseReleased
+        btnAdicionarReceita.setBackground(new Color(33, 33, 33));
+    }//GEN-LAST:event_btnAdicionarReceitaMouseReleased
+
+    private void btnAdicionarReceitaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdicionarReceitaMousePressed
+        btnAdicionarReceita.setBackground(new Color(80, 80, 80));
+    }//GEN-LAST:event_btnAdicionarReceitaMousePressed
+
+    private void btnAdicionarReceitaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdicionarReceitaMouseExited
+        btnAdicionarReceita.setBackground(new Color(33, 33, 33));
+    }//GEN-LAST:event_btnAdicionarReceitaMouseExited
+
+    private void btnAdicionarReceitaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdicionarReceitaMouseEntered
+        btnAdicionarReceita.setBackground(new Color(50, 50, 50));
+    }//GEN-LAST:event_btnAdicionarReceitaMouseEntered
+
+    private void btnAdicionarCategoriaReceitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarCategoriaReceitaActionPerformed
+        
+        if(tfAdicionarCategoriaReceita.getText().equals("")){
+            AlertaGenericoView alerta = new AlertaGenericoView(this, true, "Digite algo para categoria");
+            alerta.setLocationRelativeTo(this);
+            alerta.setVisible(true);
+        }else{
+            Set<String> nomesAdicionados = new HashSet<>();
+            for(Categoria categoria : controller.getCategorias()){
+                if(categoria.getTipoCategoria() == TipoCategoria.RECEITA && categoria.getNome().equalsIgnoreCase(tfAdicionarCategoriaReceita.getText())){
+                    AlertaGenericoView alerta = new AlertaGenericoView(this, true, "Esta categoria já existe");
+                    tfAdicionarCategoriaReceita.setText("");
+                    alerta.setLocationRelativeTo(this);
+                    alerta.setVisible(true);
+                    return;
+                }
+            }
+            controller.incluirCategoria(new Categoria(tfAdicionarCategoriaReceita.getText(), TipoCategoria.RECEITA));
+            tfAdicionarCategoriaReceita.setText("");
+        }
+        atualizarListaCategoria();
+    }//GEN-LAST:event_btnAdicionarCategoriaReceitaActionPerformed
+
+    private void btnAdicionarCategoriaDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarCategoriaDespesaActionPerformed
+        if(tfAdicionarCategoriaDespesa.getText().equals("")){
+            AlertaGenericoView alerta = new AlertaGenericoView(this, true, "Digite algo para categoria");
+            alerta.setLocationRelativeTo(this);
+            alerta.setVisible(true);
+        }else{
+            Set<String> nomesAdicionados = new HashSet<>();
+            for(Categoria categoria : controller.getCategorias()){
+                if(categoria.getTipoCategoria() == TipoCategoria.DESPESA && categoria.getNome().equalsIgnoreCase(tfAdicionarCategoriaDespesa.getText())){
+                    tfAdicionarCategoriaDespesa.setText("");
+                    AlertaGenericoView alerta = new AlertaGenericoView(this, true, "Esta categoria já existe");
+                    alerta.setLocationRelativeTo(this);
+                    alerta.setVisible(true);
+                    return;
+                }
+            }
+            controller.incluirCategoria(new Categoria(tfAdicionarCategoriaDespesa.getText(), TipoCategoria.DESPESA));
+            tfAdicionarCategoriaDespesa.setText("");
+        }
+        atualizarListaCategoria();
+    }//GEN-LAST:event_btnAdicionarCategoriaDespesaActionPerformed
+
+    private void tfPesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfPesquisaKeyReleased
+        
+        Set<String> nomesAdicionados = new HashSet<>();
+        
+        categoriasSelectionadasGeral.clear();
+        listaCategorias.removeAll();
+        
+        if(tfPesquisa.getText().equals("")){
+            categoriasSelectionadasGeral.clear();
+        }else{
+            for (Categoria categoria : controller.getCategorias()){
+                if (nomesAdicionados.add(categoria.getNome().toLowerCase()) && categoria.getNome().toLowerCase().contains(tfPesquisa.getText().toLowerCase())) {
+                    listaCategorias.add(new ItemCategoriaView(this, categoria, controller, false));
+                    categoriasSelectionadasGeral.add(categoria);
+                }
+            }
+        }
+        
+        atualizarListas();
+        
+    }//GEN-LAST:event_tfPesquisaKeyReleased
+
+    private void tfPesquisaCategoriaReceitaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfPesquisaCategoriaReceitaKeyReleased
+        
+        categoriasSelectionadasReceitas.clear();
+        listaCategoriasReceitas.removeAll();
+        
+        if(tfPesquisaCategoriaReceita.getText().equals("")){
+            categoriasSelectionadasReceitas.clear();
+        }else{
+            for (Categoria categoria : controller.getCategorias()){
+                if (categoria.getNome().toLowerCase().contains(tfPesquisaCategoriaReceita.getText().toLowerCase())) {
+                    listaCategoriasReceitas.add(new ItemCategoriaView(this, categoria, controller, false));
+                    categoriasSelectionadasReceitas.add(categoria);
+                }
+            }
+        }
+        
+        atualizarListas();
+        
+    }//GEN-LAST:event_tfPesquisaCategoriaReceitaKeyReleased
+
+    private void tfPesquisaCategoriaDespesaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfPesquisaCategoriaDespesaKeyReleased
+        
+        categoriasSelectionadasDespesas.clear();
+        listaCategoriasDespesas.removeAll();
+        
+        if(tfPesquisaCategoriaDespesa.getText().equals("")){
+            categoriasSelectionadasDespesas.clear();
+        }else{
+            for (Categoria categoria : controller.getCategorias()){
+                if (categoria.getNome().toLowerCase().contains(tfPesquisaCategoriaDespesa.getText().toLowerCase())) {
+                    listaCategoriasDespesas.add(new ItemCategoriaView(this, categoria, controller, false));
+                    categoriasSelectionadasDespesas.add(categoria);
+                }
+            }
+        }
+        
+        atualizarListas();
+        
+    }//GEN-LAST:event_tfPesquisaCategoriaDespesaKeyReleased
 
     /**
      * @param args the command line arguments
@@ -883,6 +1029,7 @@ public class LancamentosView extends javax.swing.JFrame {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    javax.swing.UIManager.put("List.focusCellHighlightBorder", BorderFactory.createEmptyBorder());
                     break;
                 }
             }
@@ -909,12 +1056,12 @@ public class LancamentosView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Despesas;
     private javax.swing.JPanel Geral;
-    private Trabalho.view.ListaMenu<String> Menu;
+    private javax.swing.JList<String> Menu;
     private javax.swing.JPanel Receitas;
+    private javax.swing.JButton btnAdicionarCategoriaDespesa;
+    private javax.swing.JButton btnAdicionarCategoriaReceita;
     private javax.swing.JButton btnAdicionarDespesa;
     private javax.swing.JButton btnAdicionarReceita;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -971,8 +1118,8 @@ public class LancamentosView extends javax.swing.JFrame {
     private javax.swing.JTextField tfAdicionarCategoriaDespesa;
     private javax.swing.JTextField tfAdicionarCategoriaReceita;
     private javax.swing.JTextField tfPesquisa;
-    private javax.swing.JTextField tfPesquisa1;
     private javax.swing.JTextField tfPesquisaCategoriaDespesa;
+    private javax.swing.JTextField tfPesquisaCategoriaReceita;
     // End of variables declaration//GEN-END:variables
 
     public void Geral(){
@@ -999,14 +1146,197 @@ public class LancamentosView extends javax.swing.JFrame {
         
     }
 
-    public void inicializarListas(){
+    public void atualizarListas(){
      
+        Collections.sort(controller.getLancamentos());
+        Collections.reverse(controller.getLancamentos());
+        
+        listaTodos.removeAll();
+        listaLancados.removeAll();
+        listaFuturos.removeAll();
+        listaTodasReceitas.removeAll();
+        listaTodasDespesas.removeAll();
+        listaLancadasReceitas.removeAll();
+        listaLancadasDespesas.removeAll();
+        listaFuturasReceitas.removeAll();
+        listaFuturasDespesas.removeAll();
+        
         for (Lancamento lancamento : controller.getLancamentos()){
-            
-            listaTodos.add(new ItemLancamento(lancamento, controller));
+            if(categoriasSelectionadasGeral.isEmpty()){
+                listaTodos.add(new ItemLancamentoView(lancamento, controller, false, this));
+                if(lancamento.getData().isBefore(LocalDate.now()) || lancamento.getData().equals(LocalDate.now())){
+                    listaLancados.add(new ItemLancamentoView(lancamento, controller, false, this));
+                }else if(lancamento.getData().isAfter(LocalDate.now())){
+                    listaFuturos.add(new ItemLancamentoView(lancamento, controller, false, this));
+                }
+            }else{
+                for(Categoria categoria : categoriasSelectionadasGeral){
+                    if(lancamento instanceof Receita){
+                        if(((Receita)lancamento).getCategoria().getNome().equals(categoria.getNome())){
+                            listaTodos.add(new ItemLancamentoView(lancamento, controller, false, this));
+                            if(lancamento.getData().isBefore(LocalDate.now()) || lancamento.getData().equals(LocalDate.now())){
+                                listaLancados.add(new ItemLancamentoView(lancamento, controller, false, this));
+                            }else if(lancamento.getData().isAfter(LocalDate.now())){
+                                listaFuturos.add(new ItemLancamentoView(lancamento, controller, false, this));
+                            }
+                        }
+                    }else{
+                        if(((Despesa)lancamento).getCategoria().getNome().equals(categoria.getNome())){
+                            listaTodos.add(new ItemLancamentoView(lancamento, controller, false, this));
+                            if(lancamento.getData().isBefore(LocalDate.now()) || lancamento.getData().equals(LocalDate.now())){
+                                listaLancados.add(new ItemLancamentoView(lancamento, controller, false, this));
+                            }else if(lancamento.getData().isAfter(LocalDate.now())){
+                                listaFuturos.add(new ItemLancamentoView(lancamento, controller, false, this));
+                            }
+                        }
+                    }
+                }
+            }
+            if(lancamento instanceof Receita){
+                if(categoriasSelectionadasReceitas.isEmpty()){
+                    listaTodasReceitas.add(new ItemLancamentoView(lancamento, controller, true, this));
+                    if(lancamento.getData().isBefore(LocalDate.now()) || lancamento.getData().equals(LocalDate.now())){
+                        listaLancadasReceitas.add(new ItemLancamentoView(lancamento, controller, true, this));
+                    }else if(lancamento.getData().isAfter(LocalDate.now())){
+                        listaFuturasReceitas.add(new ItemLancamentoView(lancamento, controller, true, this));
+                    }
+                }else{
+                    for(Categoria categoria : categoriasSelectionadasReceitas){
+                        if(((Receita)lancamento).getCategoria().getNome().equals(categoria.getNome()) && categoria.getTipoCategoria() == RECEITA){
+                            listaTodasReceitas.add(new ItemLancamentoView(lancamento, controller, true, this));
+                            if(lancamento.getData().isBefore(LocalDate.now()) || lancamento.getData().equals(LocalDate.now())){
+                                listaLancadasReceitas.add(new ItemLancamentoView(lancamento, controller, true, this));
+                            }else if(lancamento.getData().isAfter(LocalDate.now())){
+                                listaFuturasReceitas.add(new ItemLancamentoView(lancamento, controller, true, this));
+                            }
+                        }
+                    }
+                }
+            }else if(lancamento instanceof Despesa){
+                
+                if(categoriasSelectionadasDespesas.isEmpty()){
+                    listaTodasDespesas.add(new ItemLancamentoView(lancamento, controller, true, this));
+                    if(lancamento.getData().isBefore(LocalDate.now()) || lancamento.getData().equals(LocalDate.now())){
+                        listaLancadasDespesas.add(new ItemLancamentoView(lancamento, controller, true, this));
+                    }else if(lancamento.getData().isAfter(LocalDate.now())){
+                        listaFuturasDespesas.add(new ItemLancamentoView(lancamento, controller, true, this));
+                    }
+                }else{
+                    for(Categoria categoria : categoriasSelectionadasDespesas){
+                        if(((Despesa)lancamento).getCategoria().getNome().equals(categoria.getNome()) && categoria.getTipoCategoria() == DESPESA){
+                            listaTodasDespesas.add(new ItemLancamentoView(lancamento, controller, true, this));
+                            if(lancamento.getData().isBefore(LocalDate.now()) || lancamento.getData().equals(LocalDate.now())){
+                                listaLancadasDespesas.add(new ItemLancamentoView(lancamento, controller, true, this));
+                            }else if(lancamento.getData().isAfter(LocalDate.now())){
+                                listaFuturasDespesas.add(new ItemLancamentoView(lancamento, controller, true, this));
+                            }
+                        }
+                    }
+                }
+                
+            }
             
         }
         
+        atualizarSaldo();
+        
+        controller.salvarLancamentos();
+        
+        this.revalidate();
+        this.repaint();
+        
+        atualizarListaCategoria();
+        
+    }
+    
+    public void atualizarListaCategoria(){
+        listaCategoriasReceitas.removeAll();
+        listaCategoriasDespesas.removeAll();
+        listaCategorias.removeAll();
+        
+        Set<String> nomesAdicionados = new HashSet<>();
+        
+        if(categoriasSelectionadasGeral.isEmpty()){
+            for (Categoria categoria : controller.getCategorias()){
+                if (nomesAdicionados.add(categoria.getNome().toLowerCase())) {
+                    listaCategorias.add(new ItemCategoriaView(this, categoria, controller, false));
+                }
+            }
+        }else{
+            for (Categoria categoria : categoriasSelectionadasGeral){
+                if (nomesAdicionados.add(categoria.getNome().toLowerCase())) {
+                    listaCategorias.add(new ItemCategoriaView(this, categoria, controller, false));
+                }
+            }
+        }
+        
+        if(categoriasSelectionadasReceitas.isEmpty()){
+            for (Categoria categoria : controller.getCategorias()){
+                if(categoria.getTipoCategoria() == TipoCategoria.RECEITA){
+                    listaCategoriasReceitas.add(new ItemCategoriaView(this, categoria, controller, true));
+                }
+            }
+        }else{
+            for (Categoria categoria : categoriasSelectionadasReceitas){
+                if(categoria.getTipoCategoria() == TipoCategoria.RECEITA){
+                    listaCategoriasReceitas.add(new ItemCategoriaView(this, categoria, controller, true));
+                }
+            }
+        }
+        
+        if(categoriasSelectionadasDespesas.isEmpty()){
+            for (Categoria categoria : controller.getCategorias()){
+                if(categoria.getTipoCategoria() == TipoCategoria.DESPESA){
+                    listaCategoriasDespesas.add(new ItemCategoriaView(this, categoria, controller, true));
+                }
+            }
+        }else{
+            for (Categoria categoria : categoriasSelectionadasDespesas){
+                if(categoria.getTipoCategoria() == TipoCategoria.DESPESA){
+                    listaCategoriasDespesas.add(new ItemCategoriaView(this, categoria, controller, true));
+                }
+            }
+        }
+        
+        this.revalidate();
+        this.repaint();
+        
+        controller.salvarCategorias();
     }
 
+    public void atualizarSaldo(){
+        
+        double saldoAtual = controller.calcularSaldo(null, LocalDate.now());
+        double saldoTotal = controller.calcularSaldo(null, null);
+        
+        if(saldoAtual<0){
+            lblSaldoAtual.setForeground(new Color(243, 45, 45));
+            lblSaldoAtual1.setForeground(new Color(243, 45, 45));
+            lblSaldoAtual2.setForeground(new Color(243, 45, 45));
+        }else{
+            lblSaldoAtual.setForeground(new Color(0, 0, 0));
+            lblSaldoAtual1.setForeground(new Color(0, 0, 0));
+            lblSaldoAtual2.setForeground(new Color(0, 0, 0));
+        }
+        
+        if(saldoTotal<0){
+            lblSaldoTotal.setForeground(new Color(243, 45, 45));
+            lblSaldoTotal1.setForeground(new Color(243, 45, 45));
+            lblSaldoTotal2.setForeground(new Color(243, 45, 45));
+        }else{
+            lblSaldoTotal.setForeground(new Color(0, 0, 0));
+            lblSaldoTotal1.setForeground(new Color(0, 0, 0));
+            lblSaldoTotal2.setForeground(new Color(0, 0, 0));
+        }
+        
+        lblSaldoAtual.setText("Saldo atual: " + NumberFormat.getCurrencyInstance().format(saldoAtual));
+        lblSaldoAtual1.setText("Saldo atual: " + NumberFormat.getCurrencyInstance().format(saldoAtual));
+        lblSaldoAtual2.setText("Saldo atual: " + NumberFormat.getCurrencyInstance().format(saldoAtual));
+        
+        lblSaldoTotal.setText("Saldo total: " + NumberFormat.getCurrencyInstance().format(saldoTotal));
+        lblSaldoTotal1.setText("Saldo total: " + NumberFormat.getCurrencyInstance().format(saldoTotal));
+        lblSaldoTotal2.setText("Saldo total: " + NumberFormat.getCurrencyInstance().format(saldoTotal));
+        
+    }
+    
 }

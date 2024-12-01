@@ -29,7 +29,7 @@ public class LancamentoController {
      */
     public void inserirLancamento(Lancamento lancamento){
         if (lancamento == null) {
-            throw  new IllegalArgumentException();
+            throw  new IllegalArgumentException("Lancamento nao pode ser nulo");
         }
         lancamentos.add(lancamento);
     }
@@ -40,7 +40,7 @@ public class LancamentoController {
      */
     public void removerLancamento(Lancamento lancamento){
         if (lancamento == null) {
-            throw  new IllegalArgumentException();
+            throw  new IllegalArgumentException("Lancamento nao pode ser nulo");
         }
         lancamentos.remove(lancamento);
     }
@@ -61,20 +61,21 @@ public class LancamentoController {
         lancamentos.clear();
         File arquivo = new File("src/Trabalho/arquivos/lancamentos.csv");
         
-        try (Scanner arqTexto = new Scanner(arquivo)){
-            while (arqTexto.hasNext()){
-                String[] lancamento = arqTexto.nextLine().split(",");
-                switch(lancamento[3]){
-                   case "RECEITA" -> lancamentos.add(new Receita(Double.parseDouble(lancamento[0]), LocalDate.parse(lancamento[1]), new Categoria(lancamento[2], TipoCategoria.RECEITA)));
-                   case "DESPESA" -> lancamentos.add(new Despesa(Double.parseDouble(lancamento[0]), LocalDate.parse(lancamento[1]), new Categoria(lancamento[2], TipoCategoria.DESPESA)));
+        if(arquivo.exists()){
+            try (Scanner arqTexto = new Scanner(arquivo)){
+                while (arqTexto.hasNext()){
+                    String[] lancamento = arqTexto.nextLine().split(",");
+                    switch(lancamento[3]){
+                       case "RECEITA" -> lancamentos.add(new Receita(Double.parseDouble(lancamento[0]), LocalDate.parse(lancamento[1]), new Categoria(lancamento[2], TipoCategoria.RECEITA)));
+                       case "DESPESA" -> lancamentos.add(new Despesa(Double.parseDouble(lancamento[0]), LocalDate.parse(lancamento[1]), new Categoria(lancamento[2], TipoCategoria.DESPESA)));
+                    }
                 }
+            } catch (IOException e) {
+
+                System.out.println("Erro ao carregar arquivos " + e.toString());
+
             }
-        } catch (IOException e) {
-
-            System.out.println("Erro ao carregar arquivos " + e.toString());
-
         }
-        
     }
     
     /**
@@ -111,8 +112,8 @@ public class LancamentoController {
      * @param categoria a categoria a ser incluida
      */
     public void incluirCategoria(Categoria categoria){
-        if (categoria == null) {
-            throw new IllegalArgumentException();
+        if(categoria == null){
+            throw new IllegalArgumentException("Categoria nao pode ser nula");
         }
         this.categorias.add(categoria);
     }
@@ -122,8 +123,8 @@ public class LancamentoController {
      * @param categoria a categoria a ser removida
      */
     public void removerCategoria(Categoria categoria){
-        if (categoria == null) {
-            throw new IllegalArgumentException();
+        if(categoria == null){
+            throw new IllegalArgumentException("Categoria nao pode ser nula");
         }
         this.categorias.remove(categoria);
     }
@@ -143,16 +144,18 @@ public class LancamentoController {
         categorias.clear();
         File arquivo = new File("src/Trabalho/arquivos/categorias.csv");
         
-        try (Scanner arqTexto = new Scanner(arquivo)){
-            while (arqTexto.hasNext()){
-                String[] categoria = arqTexto.nextLine().split(",");
-                switch(categoria[1]){
-                   case "RECEITA" -> categorias.add(new Categoria(categoria[0], TipoCategoria.RECEITA));
-                   case "DESPESA" -> categorias.add(new Categoria(categoria[0], TipoCategoria.DESPESA));
+        if(arquivo.exists()){
+            try (Scanner arqTexto = new Scanner(arquivo)){
+                while (arqTexto.hasNext()){
+                    String[] categoria = arqTexto.nextLine().split(",");
+                    switch(categoria[1]){
+                       case "RECEITA" -> categorias.add(new Categoria(categoria[0], TipoCategoria.RECEITA));
+                       case "DESPESA" -> categorias.add(new Categoria(categoria[0], TipoCategoria.DESPESA));
+                    }
                 }
+            } catch (IOException e) {
+                System.out.println("Erro ao carregar arquivos " + e.getMessage());
             }
-        } catch (IOException e) {
-            System.out.println("Erro ao carregar arquivos " + e.getMessage());
         }
     }
     
@@ -183,14 +186,14 @@ public class LancamentoController {
      * 
      * @param desde inicio do periodo, null para inicio indefinido
      * @param ate fim do periodo, null para fim indefinido
-     * @return double o saldo
+     * @return double o saldo disponível no período determinado
      */
     public double calcularSaldo(LocalDate desde, LocalDate ate){
         
         double saldo = 0;
         
         for(Lancamento lancamento : getLancamentos()){
-            if(!desde.equals(null) && !ate.equals(null)){
+            if(desde != null && ate != null){
                 int cmpDesde = lancamento.getData().compareTo(desde);
                 int cmpAte = lancamento.getData().compareTo(ate);
 
@@ -201,7 +204,7 @@ public class LancamentoController {
                         saldo -= lancamento.getValor();
                     }
                 }
-            }else if(desde.equals(null) && !ate.equals(null)){
+            }else if(desde == null && ate != null){
                 int cmpAte = lancamento.getData().compareTo(ate);
 
                 if(cmpAte <= 0){
@@ -211,7 +214,7 @@ public class LancamentoController {
                         saldo -= lancamento.getValor();
                     }
                 }
-            }else if(!desde.equals(null) && ate.equals(null)){
+            }else if(desde != null && ate == null){
                 int cmpDesde = lancamento.getData().compareTo(desde);
 
                 if(cmpDesde >= 0){
@@ -221,7 +224,7 @@ public class LancamentoController {
                         saldo -= lancamento.getValor();
                     }
                 }
-            }else if(desde.equals(null) && ate.equals(null)){
+            }else if(desde == null && ate == null){
                 if(lancamento instanceof Receita){
                     saldo += lancamento.getValor();
                 }else if(lancamento instanceof Despesa){
