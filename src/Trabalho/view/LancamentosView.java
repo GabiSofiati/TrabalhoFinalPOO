@@ -17,6 +17,7 @@ import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 import javax.swing.BorderFactory;
@@ -36,20 +37,59 @@ public class LancamentosView extends javax.swing.JFrame {
     private boolean digitadoCategoriaReceita = false;
     private boolean digitadoCategoriaDespesa = false;
     
-    private ArrayList<Categoria> categoriasSelectionadasGeral = new ArrayList<>();
-    private ArrayList<Categoria> categoriasSelectionadasReceitas = new ArrayList<>();
-    private ArrayList<Categoria> categoriasSelectionadasDespesas = new ArrayList<>();
+    private ArrayList<Categoria> categoriasPesquisadasGeral = new ArrayList<>();
+    private ArrayList<Categoria> categoriasPesquisadasReceitas = new ArrayList<>();
+    private ArrayList<Categoria> categoriasPesquisadasDespesas = new ArrayList<>();
+    private ArrayList<Categoria> categoriasSelecionadasGeral = new ArrayList<>();
+    private ArrayList<Categoria> categoriasSelecionadasReceitas = new ArrayList<>();
+    private ArrayList<Categoria> categoriasSelecionadasDespesas = new ArrayList<>();
     
-    public ArrayList<Categoria> getCategoriasSelectionadasGeral() {
-        return categoriasSelectionadasGeral;
+    public boolean isDigitadoCategoriaGeral() {
+        return digitadoCategoriaGeral;
     }
 
-    public ArrayList<Categoria> getCategoriasSelectionadasReceitas() {
-        return categoriasSelectionadasReceitas;
+    public void setDigitadoCategoriaGeral(boolean digitadoCategoriaGeral) {
+        this.digitadoCategoriaGeral = digitadoCategoriaGeral;
     }
 
-    public ArrayList<Categoria> getCategoriasSelectionadasDespesas() {
-        return categoriasSelectionadasDespesas;
+    public boolean isDigitadoCategoriaReceita() {
+        return digitadoCategoriaReceita;
+    }
+
+    public void setDigitadoCategoriaReceita(boolean digitadoCategoriaReceita) {
+        this.digitadoCategoriaReceita = digitadoCategoriaReceita;
+    }
+
+    public boolean isDigitadoCategoriaDespesa() {
+        return digitadoCategoriaDespesa;
+    }
+
+    public void setDigitadoCategoriaDespesa(boolean digitadoCategoriaDespesa) {
+        this.digitadoCategoriaDespesa = digitadoCategoriaDespesa;
+    }
+    
+    public ArrayList<Categoria> getCategoriasSelecionadasGeral() {
+        return categoriasSelecionadasGeral;
+    }
+
+    public ArrayList<Categoria> getCategoriasSelecionadasReceitas() {
+        return categoriasSelecionadasReceitas;
+    }
+
+    public ArrayList<Categoria> getCategoriasSelecionadasDespesas() {
+        return categoriasSelecionadasDespesas;
+    }
+
+    public ArrayList<Categoria> getCategoriasPesquisadasGeral() {
+        return categoriasPesquisadasGeral;
+    }
+
+    public ArrayList<Categoria> getCategoriasPesquisadasReceitas() {
+        return categoriasPesquisadasReceitas;
+    }
+
+    public ArrayList<Categoria> getCategoriasPesquisadasDespesas() {
+        return categoriasPesquisadasDespesas;
     }
     
     /**
@@ -929,6 +969,7 @@ public class LancamentosView extends javax.swing.JFrame {
             controller.incluirCategoria(new Categoria(tfAdicionarCategoriaReceita.getText(), TipoCategoria.RECEITA));
             tfAdicionarCategoriaReceita.setText("");
         }
+        atualizarListas();
         atualizarListaCategoria();
     }//GEN-LAST:event_btnAdicionarCategoriaReceitaActionPerformed
 
@@ -951,67 +992,27 @@ public class LancamentosView extends javax.swing.JFrame {
             controller.incluirCategoria(new Categoria(tfAdicionarCategoriaDespesa.getText(), TipoCategoria.DESPESA));
             tfAdicionarCategoriaDespesa.setText("");
         }
+        atualizarListas();
         atualizarListaCategoria();
     }//GEN-LAST:event_btnAdicionarCategoriaDespesaActionPerformed
 
     private void tfPesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfPesquisaKeyReleased
         
-        Set<String> nomesAdicionados = new HashSet<>();
-        
-        categoriasSelectionadasGeral.clear();
-        listaCategorias.removeAll();
-        
-        if(tfPesquisa.getText().equals("")){
-            categoriasSelectionadasGeral.clear();
-        }else{
-            for (Categoria categoria : controller.getCategorias()){
-                if (nomesAdicionados.add(categoria.getNome().toLowerCase()) && categoria.getNome().toLowerCase().contains(tfPesquisa.getText().toLowerCase())) {
-                    listaCategorias.add(new ItemCategoriaView(this, categoria, controller, false));
-                    categoriasSelectionadasGeral.add(categoria);
-                }
-            }
-        }
-        
+        atualizarListaCategoria();
         atualizarListas();
         
     }//GEN-LAST:event_tfPesquisaKeyReleased
 
     private void tfPesquisaCategoriaReceitaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfPesquisaCategoriaReceitaKeyReleased
         
-        categoriasSelectionadasReceitas.clear();
-        listaCategoriasReceitas.removeAll();
-        
-        if(tfPesquisaCategoriaReceita.getText().equals("")){
-            categoriasSelectionadasReceitas.clear();
-        }else{
-            for (Categoria categoria : controller.getCategorias()){
-                if (categoria.getNome().toLowerCase().contains(tfPesquisaCategoriaReceita.getText().toLowerCase())) {
-                    listaCategoriasReceitas.add(new ItemCategoriaView(this, categoria, controller, false));
-                    categoriasSelectionadasReceitas.add(categoria);
-                }
-            }
-        }
-        
+        atualizarListaCategoria();
         atualizarListas();
         
     }//GEN-LAST:event_tfPesquisaCategoriaReceitaKeyReleased
 
     private void tfPesquisaCategoriaDespesaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfPesquisaCategoriaDespesaKeyReleased
         
-        categoriasSelectionadasDespesas.clear();
-        listaCategoriasDespesas.removeAll();
-        
-        if(tfPesquisaCategoriaDespesa.getText().equals("")){
-            categoriasSelectionadasDespesas.clear();
-        }else{
-            for (Categoria categoria : controller.getCategorias()){
-                if (categoria.getNome().toLowerCase().contains(tfPesquisaCategoriaDespesa.getText().toLowerCase())) {
-                    listaCategoriasDespesas.add(new ItemCategoriaView(this, categoria, controller, false));
-                    categoriasSelectionadasDespesas.add(categoria);
-                }
-            }
-        }
-        
+        atualizarListaCategoria();
         atualizarListas();
         
     }//GEN-LAST:event_tfPesquisaCategoriaDespesaKeyReleased
@@ -1162,7 +1163,7 @@ public class LancamentosView extends javax.swing.JFrame {
         listaFuturasDespesas.removeAll();
         
         for (Lancamento lancamento : controller.getLancamentos()){
-            if(categoriasSelectionadasGeral.isEmpty()){
+            if(categoriasSelecionadasGeral.isEmpty()){
                 listaTodos.add(new ItemLancamentoView(lancamento, controller, false, this));
                 if(lancamento.getData().isBefore(LocalDate.now()) || lancamento.getData().equals(LocalDate.now())){
                     listaLancados.add(new ItemLancamentoView(lancamento, controller, false, this));
@@ -1170,7 +1171,7 @@ public class LancamentosView extends javax.swing.JFrame {
                     listaFuturos.add(new ItemLancamentoView(lancamento, controller, false, this));
                 }
             }else{
-                for(Categoria categoria : categoriasSelectionadasGeral){
+                for(Categoria categoria : categoriasSelecionadasGeral){
                     if(lancamento instanceof Receita){
                         if(((Receita)lancamento).getCategoria().getNome().equals(categoria.getNome())){
                             listaTodos.add(new ItemLancamentoView(lancamento, controller, false, this));
@@ -1193,7 +1194,7 @@ public class LancamentosView extends javax.swing.JFrame {
                 }
             }
             if(lancamento instanceof Receita){
-                if(categoriasSelectionadasReceitas.isEmpty()){
+                if(categoriasSelecionadasReceitas.isEmpty()){
                     listaTodasReceitas.add(new ItemLancamentoView(lancamento, controller, true, this));
                     if(lancamento.getData().isBefore(LocalDate.now()) || lancamento.getData().equals(LocalDate.now())){
                         listaLancadasReceitas.add(new ItemLancamentoView(lancamento, controller, true, this));
@@ -1201,7 +1202,7 @@ public class LancamentosView extends javax.swing.JFrame {
                         listaFuturasReceitas.add(new ItemLancamentoView(lancamento, controller, true, this));
                     }
                 }else{
-                    for(Categoria categoria : categoriasSelectionadasReceitas){
+                    for(Categoria categoria : categoriasSelecionadasReceitas){
                         if(((Receita)lancamento).getCategoria().getNome().equals(categoria.getNome()) && categoria.getTipoCategoria() == RECEITA){
                             listaTodasReceitas.add(new ItemLancamentoView(lancamento, controller, true, this));
                             if(lancamento.getData().isBefore(LocalDate.now()) || lancamento.getData().equals(LocalDate.now())){
@@ -1214,7 +1215,7 @@ public class LancamentosView extends javax.swing.JFrame {
                 }
             }else if(lancamento instanceof Despesa){
                 
-                if(categoriasSelectionadasDespesas.isEmpty()){
+                if(categoriasSelecionadasDespesas.isEmpty()){
                     listaTodasDespesas.add(new ItemLancamentoView(lancamento, controller, true, this));
                     if(lancamento.getData().isBefore(LocalDate.now()) || lancamento.getData().equals(LocalDate.now())){
                         listaLancadasDespesas.add(new ItemLancamentoView(lancamento, controller, true, this));
@@ -1222,7 +1223,7 @@ public class LancamentosView extends javax.swing.JFrame {
                         listaFuturasDespesas.add(new ItemLancamentoView(lancamento, controller, true, this));
                     }
                 }else{
-                    for(Categoria categoria : categoriasSelectionadasDespesas){
+                    for(Categoria categoria : categoriasSelecionadasDespesas){
                         if(((Despesa)lancamento).getCategoria().getNome().equals(categoria.getNome()) && categoria.getTipoCategoria() == DESPESA){
                             listaTodasDespesas.add(new ItemLancamentoView(lancamento, controller, true, this));
                             if(lancamento.getData().isBefore(LocalDate.now()) || lancamento.getData().equals(LocalDate.now())){
@@ -1245,55 +1246,60 @@ public class LancamentosView extends javax.swing.JFrame {
         this.revalidate();
         this.repaint();
         
-        atualizarListaCategoria();
-        
     }
     
     public void atualizarListaCategoria(){
+        
+        Collections.sort(controller.getCategorias(), (c1, c2) -> c1.getNome().compareToIgnoreCase(c2.getNome()));
+        
         listaCategoriasReceitas.removeAll();
         listaCategoriasDespesas.removeAll();
         listaCategorias.removeAll();
         
+        pesquisarCategoriaGeral();
+        pesquisarCategoriaReceita();
+        pesquisarCategoriaDespesa();
+        
         Set<String> nomesAdicionados = new HashSet<>();
         
-        if(categoriasSelectionadasGeral.isEmpty()){
+        if(categoriasSelecionadasGeral.isEmpty()){
             for (Categoria categoria : controller.getCategorias()){
                 if (nomesAdicionados.add(categoria.getNome().toLowerCase())) {
-                    listaCategorias.add(new ItemCategoriaView(this, categoria, controller, false));
+                    listaCategorias.add(new ItemCategoriaView(this, categoria, controller, false, -1));
                 }
             }
         }else{
-            for (Categoria categoria : categoriasSelectionadasGeral){
+            for (Categoria categoria : categoriasSelecionadasGeral){
                 if (nomesAdicionados.add(categoria.getNome().toLowerCase())) {
-                    listaCategorias.add(new ItemCategoriaView(this, categoria, controller, false));
+                    listaCategorias.add(new ItemCategoriaView(this, categoria, controller, false, -1));
                 }
             }
         }
         
-        if(categoriasSelectionadasReceitas.isEmpty()){
+        if(categoriasSelecionadasReceitas.isEmpty()){
             for (Categoria categoria : controller.getCategorias()){
                 if(categoria.getTipoCategoria() == TipoCategoria.RECEITA){
-                    listaCategoriasReceitas.add(new ItemCategoriaView(this, categoria, controller, true));
+                    listaCategoriasReceitas.add(new ItemCategoriaView(this, categoria, controller, true, 0));
                 }
             }
         }else{
-            for (Categoria categoria : categoriasSelectionadasReceitas){
+            for (Categoria categoria : categoriasSelecionadasReceitas){
                 if(categoria.getTipoCategoria() == TipoCategoria.RECEITA){
-                    listaCategoriasReceitas.add(new ItemCategoriaView(this, categoria, controller, true));
+                    listaCategoriasReceitas.add(new ItemCategoriaView(this, categoria, controller, true, 0));
                 }
             }
         }
         
-        if(categoriasSelectionadasDespesas.isEmpty()){
+        if(categoriasSelecionadasDespesas.isEmpty()){
             for (Categoria categoria : controller.getCategorias()){
                 if(categoria.getTipoCategoria() == TipoCategoria.DESPESA){
-                    listaCategoriasDespesas.add(new ItemCategoriaView(this, categoria, controller, true));
+                    listaCategoriasDespesas.add(new ItemCategoriaView(this, categoria, controller, true, 1));
                 }
             }
         }else{
-            for (Categoria categoria : categoriasSelectionadasDespesas){
+            for (Categoria categoria : categoriasSelecionadasDespesas){
                 if(categoria.getTipoCategoria() == TipoCategoria.DESPESA){
-                    listaCategoriasDespesas.add(new ItemCategoriaView(this, categoria, controller, true));
+                    listaCategoriasDespesas.add(new ItemCategoriaView(this, categoria, controller, true, 1));
                 }
             }
         }
@@ -1339,4 +1345,47 @@ public class LancamentosView extends javax.swing.JFrame {
         
     }
     
+    private void pesquisarCategoriaGeral(){
+        Set<String> nomesAdicionados = new HashSet<>();
+        
+        categoriasPesquisadasGeral.clear();
+        categoriasSelecionadasGeral.clear();
+        listaCategorias.removeAll();
+        
+        for (Categoria categoria : controller.getCategorias()){
+            if (nomesAdicionados.add(categoria.getNome().toLowerCase()) && categoria.getNome().toLowerCase().contains(tfPesquisa.getText().toLowerCase())) {
+                categoriasSelecionadasGeral.add(categoria);
+                categoriasPesquisadasGeral.add(categoria);
+                setDigitadoCategoriaGeral(true);
+            }
+        }
+    }
+    
+    private void pesquisarCategoriaReceita(){
+        categoriasPesquisadasReceitas.clear();
+        categoriasSelecionadasReceitas.clear();
+        listaCategoriasReceitas.removeAll();
+        
+        for (Categoria categoria : controller.getCategorias()){
+            if (categoria.getNome().toLowerCase().contains(tfPesquisaCategoriaReceita.getText().toLowerCase()) && categoria.getTipoCategoria() == RECEITA) {
+                categoriasSelecionadasReceitas.add(categoria);
+                categoriasPesquisadasReceitas.add(categoria);
+                setDigitadoCategoriaReceita(true);
+            }
+        }
+    }
+    
+    private void pesquisarCategoriaDespesa(){
+        categoriasPesquisadasDespesas.clear();
+        categoriasSelecionadasDespesas.clear();
+        listaCategoriasDespesas.removeAll();
+        
+        for (Categoria categoria : controller.getCategorias()){
+            if (categoria.getNome().toLowerCase().contains(tfPesquisaCategoriaDespesa.getText().toLowerCase()) && categoria.getTipoCategoria() == DESPESA) {
+                categoriasSelecionadasDespesas.add(categoria);
+                categoriasPesquisadasDespesas.add(categoria);
+                setDigitadoCategoriaDespesa(true);
+            }
+        }
+    }
 }
