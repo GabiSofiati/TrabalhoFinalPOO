@@ -13,6 +13,7 @@ import Trabalho.model.TipoCategoria;
 import static Trabalho.model.TipoCategoria.DESPESA;
 import static Trabalho.model.TipoCategoria.RECEITA;
 import java.awt.Color;
+import java.text.Normalizer;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -958,7 +959,7 @@ public class LancamentosView extends javax.swing.JFrame {
         }else{
             Set<String> nomesAdicionados = new HashSet<>();
             for(Categoria categoria : controller.getCategorias()){
-                if(categoria.getTipoCategoria() == TipoCategoria.RECEITA && categoria.getNome().equalsIgnoreCase(tfAdicionarCategoriaReceita.getText())){
+                if(categoria.getTipoCategoria() == TipoCategoria.RECEITA && normalize(categoria.getNome()).equals(normalize(tfAdicionarCategoriaReceita.getText()))){
                     AlertaGenericoView alerta = new AlertaGenericoView(this, true, "Esta categoria já existe");
                     tfAdicionarCategoriaReceita.setText("");
                     alerta.setLocationRelativeTo(this);
@@ -981,7 +982,7 @@ public class LancamentosView extends javax.swing.JFrame {
         }else{
             Set<String> nomesAdicionados = new HashSet<>();
             for(Categoria categoria : controller.getCategorias()){
-                if(categoria.getTipoCategoria() == TipoCategoria.DESPESA && categoria.getNome().equalsIgnoreCase(tfAdicionarCategoriaDespesa.getText())){
+                if(categoria.getTipoCategoria() == TipoCategoria.DESPESA && normalize(categoria.getNome()).equals(normalize(tfAdicionarCategoriaDespesa.getText()))){
                     tfAdicionarCategoriaDespesa.setText("");
                     AlertaGenericoView alerta = new AlertaGenericoView(this, true, "Esta categoria já existe");
                     alerta.setLocationRelativeTo(this);
@@ -1250,7 +1251,13 @@ public class LancamentosView extends javax.swing.JFrame {
     
     public void atualizarListaCategoria(){
         
-        Collections.sort(controller.getCategorias(), (c1, c2) -> c1.getNome().compareToIgnoreCase(c2.getNome()));
+        Collections.sort(controller.getCategorias(), (c1, c2) -> {
+            String nome1 = Normalizer.normalize(c1.getNome(), Normalizer.Form.NFD).replaceAll("\\p{M}", "");
+            String nome2 = Normalizer.normalize(c2.getNome(), Normalizer.Form.NFD).replaceAll("\\p{M}", "");
+            return nome1.compareToIgnoreCase(nome2);
+        });
+        
+        //Collections.sort(controller.getCategorias(), (c1, c2) -> c1.getNome().compareToIgnoreCase(c2.getNome()));
         
         listaCategoriasReceitas.removeAll();
         listaCategoriasDespesas.removeAll();
@@ -1353,7 +1360,9 @@ public class LancamentosView extends javax.swing.JFrame {
         listaCategorias.removeAll();
         
         for (Categoria categoria : controller.getCategorias()){
-            if (nomesAdicionados.add(categoria.getNome().toLowerCase()) && categoria.getNome().toLowerCase().contains(tfPesquisa.getText().toLowerCase())) {
+            String nomeNormalizado = normalize(categoria.getNome());
+            String pesquisaNormalizada = normalize(tfPesquisa.getText());
+            if (nomesAdicionados.add(nomeNormalizado) && nomeNormalizado.contains(pesquisaNormalizada)) {
                 categoriasSelecionadasGeral.add(categoria);
                 categoriasPesquisadasGeral.add(categoria);
                 setDigitadoCategoriaGeral(true);
@@ -1367,7 +1376,9 @@ public class LancamentosView extends javax.swing.JFrame {
         listaCategoriasReceitas.removeAll();
         
         for (Categoria categoria : controller.getCategorias()){
-            if (categoria.getNome().toLowerCase().contains(tfPesquisaCategoriaReceita.getText().toLowerCase()) && categoria.getTipoCategoria() == RECEITA) {
+            String nomeNormalizado = normalize(categoria.getNome());
+            String pesquisaNormalizada = normalize(tfPesquisaCategoriaReceita.getText());
+            if (nomeNormalizado.contains(pesquisaNormalizada) && categoria.getTipoCategoria() == TipoCategoria.RECEITA) {
                 categoriasSelecionadasReceitas.add(categoria);
                 categoriasPesquisadasReceitas.add(categoria);
                 setDigitadoCategoriaReceita(true);
@@ -1381,11 +1392,18 @@ public class LancamentosView extends javax.swing.JFrame {
         listaCategoriasDespesas.removeAll();
         
         for (Categoria categoria : controller.getCategorias()){
-            if (categoria.getNome().toLowerCase().contains(tfPesquisaCategoriaDespesa.getText().toLowerCase()) && categoria.getTipoCategoria() == DESPESA) {
+            String nomeNormalizado = normalize(categoria.getNome());
+            String pesquisaNormalizada = normalize(tfPesquisaCategoriaDespesa.getText());
+            if (nomeNormalizado.contains(pesquisaNormalizada) && categoria.getTipoCategoria() == TipoCategoria.DESPESA) {
                 categoriasSelecionadasDespesas.add(categoria);
                 categoriasPesquisadasDespesas.add(categoria);
                 setDigitadoCategoriaDespesa(true);
             }
         }
     }
+    
+    private String normalize(String texto) {
+        return Normalizer.normalize(texto, Normalizer.Form.NFD).replaceAll("\\p{M}", "").toLowerCase();
+    }
+    
 }
