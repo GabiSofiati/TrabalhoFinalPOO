@@ -16,9 +16,9 @@ import javax.swing.JFrame;
 
 /**
  *
- * @author Usuario
+ * @author Paulo Fontenele da Silva
  */
-public class ItemCategoria extends javax.swing.JPanel {
+public class ItemCategoriaView extends javax.swing.JPanel {
 
     private LancamentosView parent;
     private boolean deletavel;
@@ -29,7 +29,7 @@ public class ItemCategoria extends javax.swing.JPanel {
     /**
      * Creates new form ItemCategoria
      */
-    public ItemCategoria(LancamentosView parent, Categoria categoria, LancamentoController controller, boolean deletavel) {
+    public ItemCategoriaView(LancamentosView parent, Categoria categoria, LancamentoController controller, boolean deletavel) {
         this.parent = parent;
         this.deletavel = deletavel;
         this.controller = controller;
@@ -52,18 +52,16 @@ public class ItemCategoria extends javax.swing.JPanel {
             
         });
         
-        if(!deletavel) btnDeletar.setVisible(deletavel);
+        btnDeletar.setVisible(deletavel);
         
         for(Lancamento lancamento : controller.getLancamentos()){
             if(lancamento instanceof Receita){
-                if(!((Receita)lancamento).getCategoria().equals(categoria)){
+                if(((Receita)lancamento).getCategoria().getNome().equals(this.categoria.getNome()) && ((Receita)lancamento).getCategoria().getTipoCategoria().equals(this.categoria.getTipoCategoria())){
                     btnDeletar.setVisible(false);
-                    break;
                 }
             }else if(lancamento instanceof Despesa){
-                if(!((Despesa)lancamento).getCategoria().equals(categoria)){
+                if(((Despesa)lancamento).getCategoria().getNome().equals(this.categoria.getNome()) && ((Despesa)lancamento).getCategoria().getTipoCategoria().equals(this.categoria.getTipoCategoria())){
                     btnDeletar.setVisible(false);
-                    break;
                 }
             }
         }
@@ -105,9 +103,9 @@ public class ItemCategoria extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(lblCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(83, 83, 83)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 148, Short.MAX_VALUE)
                 .addComponent(btnDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -122,6 +120,9 @@ public class ItemCategoria extends javax.swing.JPanel {
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
         controller.removerCategoria(categoria);
+        parent.getCategoriasSelectionadasGeral().remove(categoria);
+        parent.getCategoriasSelectionadasReceitas().remove(categoria);
+        parent.getCategoriasSelectionadasDespesas().remove(categoria);
         parent.atualizarListaCategoria();
     }//GEN-LAST:event_btnDeletarActionPerformed
 

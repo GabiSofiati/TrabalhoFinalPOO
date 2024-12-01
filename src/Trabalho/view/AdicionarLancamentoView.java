@@ -5,16 +5,21 @@
 package Trabalho.view;
 
 import Trabalho.model.Categoria;
+import Trabalho.model.Despesa;
 import Trabalho.model.LancamentoController;
+import Trabalho.model.Receita;
 import Trabalho.model.TipoCategoria;
 import java.awt.Color;
+import java.time.DateTimeException;
+import java.time.LocalDate;
 
 /**
  *
- * @author Usuario
+ * @author Paulo Fontenele da Silva
  */
 public class AdicionarLancamentoView extends javax.swing.JDialog {
 
+    private LancamentosView parent;
     private LancamentoController controller;
     private TipoCategoria tipoCategoria;
     
@@ -23,6 +28,7 @@ public class AdicionarLancamentoView extends javax.swing.JDialog {
      */
     public AdicionarLancamentoView(LancamentoController controller, TipoCategoria tipoCategoria, java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        this.parent = (LancamentosView)parent;
         this.controller = controller;
         this.tipoCategoria = tipoCategoria;
         initComponents();
@@ -48,8 +54,8 @@ public class AdicionarLancamentoView extends javax.swing.JDialog {
         lbTitulo3 = new javax.swing.JLabel();
         btnAdicionar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        jSpinner1 = new javax.swing.JSpinner();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        spValor = new javax.swing.JSpinner();
+        tfData = new javax.swing.JFormattedTextField();
         cbCategoria = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -129,16 +135,16 @@ public class AdicionarLancamentoView extends javax.swing.JDialog {
             }
         });
 
-        jSpinner1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, null, 0.5d));
-        jSpinner1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        spValor.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        spValor.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, null, 0.5d));
+        spValor.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         try {
-            jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+            tfData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        jFormattedTextField1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        tfData.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
 
         cbCategoria.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
 
@@ -166,9 +172,9 @@ public class AdicionarLancamentoView extends javax.swing.JDialog {
                                     .addComponent(lbTitulo2))
                                 .addGap(59, 59, 59)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jFormattedTextField1)
+                                    .addComponent(tfData)
                                     .addComponent(cbCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jSpinner1))))
+                                    .addComponent(spValor))))
                         .addGap(28, 28, 28))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -179,7 +185,7 @@ public class AdicionarLancamentoView extends javax.swing.JDialog {
                 .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lbTitulo1)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(spValor, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -187,7 +193,7 @@ public class AdicionarLancamentoView extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addComponent(lbTitulo3))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tfData, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(28, 28, 28)
@@ -229,6 +235,46 @@ public class AdicionarLancamentoView extends javax.swing.JDialog {
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         
+        Categoria categoria = null;
+        
+        for(Categoria c : controller.getCategorias()){
+            if(c.getNome().equals((String)cbCategoria.getSelectedItem()) && c.getTipoCategoria().equals(this.tipoCategoria)){
+                categoria = c;
+            }
+        }
+        
+        double valor = (double)spValor.getValue();
+        
+        if(valor == 0){
+            AlertaGenericoView alerta = new AlertaGenericoView(null, true, "Informe um valor");
+            alerta.setLocationRelativeTo(this);
+            alerta.setVisible(true);
+            return;
+        }
+        
+        
+        System.out.println(categoria.getNome() + "" + categoria.getTipoCategoria());
+        
+        LocalDate data = null;
+        String[] dataTexto = tfData.getText().split("/");
+        
+        try{
+            data = LocalDate.of(Integer.parseInt(dataTexto[2]), Integer.parseInt(dataTexto[1]), Integer.parseInt(dataTexto[0]));
+        }catch(DateTimeException | NumberFormatException e){
+            AlertaGenericoView alerta = new AlertaGenericoView(null, true, "Data inválida");
+            alerta.setLocationRelativeTo(this);
+            alerta.setVisible(true);
+            return;
+        }
+        
+        switch(tipoCategoria){
+            case RECEITA -> controller.inserirLancamento(new Receita(valor, data, categoria));
+            case DESPESA -> controller.inserirLancamento(new Despesa(valor, data, categoria));
+        }
+        
+        parent.atualizarListas();
+        this.dispose();
+        
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void btnCancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseEntered
@@ -256,16 +302,17 @@ public class AdicionarLancamentoView extends javax.swing.JDialog {
     private javax.swing.JButton btnAdicionar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JComboBox<String> cbCategoria;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JLabel lbTitulo;
     private javax.swing.JLabel lbTitulo1;
     private javax.swing.JLabel lbTitulo2;
     private javax.swing.JLabel lbTitulo3;
+    private javax.swing.JSpinner spValor;
+    private javax.swing.JFormattedTextField tfData;
     // End of variables declaration//GEN-END:variables
 
     private void despesa(){
+        setTitle("Adicionar despesa");
         lbTitulo.setText("Adicionar despesa");
         for(Categoria categoria : controller.getCategorias()){
             if(categoria.getTipoCategoria() == TipoCategoria.DESPESA){
@@ -275,6 +322,7 @@ public class AdicionarLancamentoView extends javax.swing.JDialog {
     }
     
     private void receita(){
+        setTitle("Adicionar receita");
         lbTitulo.setText("Adicionar receita");
         for(Categoria categoria : controller.getCategorias()){
             if(categoria.getTipoCategoria() == TipoCategoria.RECEITA){
