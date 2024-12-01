@@ -271,6 +271,7 @@ public class ItemLancamentoView extends javax.swing.JPanel {
         if(alerta.isConfirmado()){
             controller.removerLancamento(lancamento);
             parent.atualizarListas();
+            parent.atualizarListaCategoria();
         }
     }//GEN-LAST:event_btnDeletarActionPerformed
 

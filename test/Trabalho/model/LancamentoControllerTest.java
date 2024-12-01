@@ -147,6 +147,7 @@ public class LancamentoControllerTest {
     public void testCalcularSaldoPeriodoDefinido() {
         System.out.println("calcularSaldoPeriodoValido");
         LancamentoController controller = new LancamentoController();
+        controller.inserirLancamento(new Receita(600.0, LocalDate.of(2023, 1, 31), new Categoria("Investimento", TipoCategoria.RECEITA)));
         controller.inserirLancamento(new Receita(500.0, LocalDate.of(2024, 1, 1), new Categoria("Investimento", TipoCategoria.RECEITA)));
         controller.inserirLancamento(new Despesa(200.0, LocalDate.of(2024, 4, 16), new Categoria("Aluguel", TipoCategoria.DESPESA)));
         //os acima não vão ser calculados

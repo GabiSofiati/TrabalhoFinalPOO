@@ -273,6 +273,7 @@ public class AdicionarLancamentoView extends javax.swing.JDialog {
         }
         
         parent.atualizarListas();
+        parent.atualizarListaCategoria();
         this.dispose();
         
     }//GEN-LAST:event_btnAdicionarActionPerformed
