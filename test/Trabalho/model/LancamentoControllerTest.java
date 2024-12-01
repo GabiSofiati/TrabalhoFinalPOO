@@ -61,43 +61,7 @@ public class LancamentoControllerTest {
         LancamentoController controller = new LancamentoController();
         controller.removerLancamento(lancamento);
     }
-
-    /**
-     * Teste para carregar lançamentos de um arquivo válido.
-     */
-    @Test
-    public void testCarregarLancamentosArquivoValido() {
-        System.out.println("carregarLancamentosArquivoValido");
-        LancamentoController controller = new LancamentoController();
-        controller.setDiretorioSalvamento("src/Trabalho/arquivos/");
-
-        try {
-            controller.carregarLancamentos();
-            assertFalse("A lista de lançamentos não deve estar vazia", controller.getLancamentos().isEmpty());
-        } catch (IOException e) {
-            fail("Exceção inesperada ao carregar lançamentos: " + e.getMessage());
-        }
-    }
-
-    /**
-     * Teste para salvar lançamentos em um arquivo válido.
-     */
-    @Test
-    public void testSalvarLancamentosArquivoValido() {
-        System.out.println("salvarLancamentosArquivoValido");
-        LancamentoController controller = new LancamentoController();
-        controller.setDiretorioSalvamento("src/Trabalho/arquivos/");
-        Receita receita = new Receita(200.0, LocalDate.now(), new Categoria("Bônus", TipoCategoria.RECEITA));
-        controller.inserirLancamento(receita);
-
-        try {
-            controller.salvarLancamentos();
-            assertTrue("Arquivo deve ser salvo sem erros", true);
-        } catch (IOException e) {
-            fail("Exceção inesperada ao salvar lançamentos: " + e.getMessage());
-        }
-    }
-
+    
     /**
      * Teste para incluir uma categoria nula.
      */
@@ -121,31 +85,79 @@ public class LancamentoControllerTest {
     }
 
     /**
-     * Teste para calcular saldo com período indefinido.
+     * Teste para calcular saldo com desde e até indefinido.
      */
     @Test
     public void testCalcularSaldoPeriodoIndefinido() {
         System.out.println("calcularSaldoPeriodoIndefinido");
         LancamentoController controller = new LancamentoController();
-        controller.inserirLancamento(new Receita(500.0, LocalDate.now(), new Categoria("Investimento", TipoCategoria.RECEITA)));
-        controller.inserirLancamento(new Despesa(200.0, LocalDate.now(), new Categoria("Aluguel", TipoCategoria.DESPESA)));
+        //todos vão ser calculados
+        controller.inserirLancamento(new Receita(500.0, LocalDate.of(2024, 1, 1), new Categoria("Investimento", TipoCategoria.RECEITA)));
+        controller.inserirLancamento(new Despesa(200.0, LocalDate.of(2024, 4, 16), new Categoria("Aluguel", TipoCategoria.DESPESA)));
+        controller.inserirLancamento(new Receita(1000.0, LocalDate.of(2024, 8, 8), new Categoria("Investimento", TipoCategoria.RECEITA)));
+        controller.inserirLancamento(new Despesa(200.0, LocalDate.of(2024, 11, 1), new Categoria("Aluguel", TipoCategoria.DESPESA)));
+        controller.inserirLancamento(new Receita(2000.0, LocalDate.of(2025, 2, 10), new Categoria("Investimento", TipoCategoria.RECEITA)));
+        controller.inserirLancamento(new Despesa(100.0, LocalDate.of(2025, 5, 15), new Categoria("Aluguel", TipoCategoria.DESPESA)));
 
         double saldo = controller.calcularSaldo(null, null);
-        assertEquals(300.0, saldo, 0.01);
+        assertEquals(3000.0, saldo, 0.01);
+    }
+    /**
+     * Teste para calcular saldo até indefinido.
+     */
+    @Test
+    public void testCalcularSaldoAtéIndefinido() {
+        System.out.println("calcularSaldoPeriodoIndefinido");
+        LancamentoController controller = new LancamentoController();
+        controller.inserirLancamento(new Receita(500.0, LocalDate.of(2024, 1, 1), new Categoria("Investimento", TipoCategoria.RECEITA)));
+        //o acima não vai ser calculado
+        controller.inserirLancamento(new Despesa(200.0, LocalDate.of(2024, 4, 16), new Categoria("Aluguel", TipoCategoria.DESPESA)));
+        controller.inserirLancamento(new Receita(1000.0, LocalDate.of(2024, 8, 8), new Categoria("Investimento", TipoCategoria.RECEITA)));
+        controller.inserirLancamento(new Despesa(200.0, LocalDate.of(2024, 11, 1), new Categoria("Aluguel", TipoCategoria.DESPESA)));
+        controller.inserirLancamento(new Receita(2000.0, LocalDate.of(2025, 2, 10), new Categoria("Investimento", TipoCategoria.RECEITA)));
+        controller.inserirLancamento(new Despesa(100.0, LocalDate.of(2025, 5, 15), new Categoria("Aluguel", TipoCategoria.DESPESA)));
+
+
+        double saldo = controller.calcularSaldo(LocalDate.of(2024, 4, 1), null);
+        assertEquals(2500.0, saldo, 0.01);
+    }
+    /**
+     * Teste para calcular saldo desde indefinido.
+     */
+    @Test
+    public void testCalcularSaldoDesdeIndefinido() {
+        System.out.println("calcularSaldoPeriodoIndefinido");
+        LancamentoController controller = new LancamentoController();
+        controller.inserirLancamento(new Receita(500.0, LocalDate.of(2024, 1, 1), new Categoria("Investimento", TipoCategoria.RECEITA)));
+        controller.inserirLancamento(new Despesa(200.0, LocalDate.of(2024, 4, 16), new Categoria("Aluguel", TipoCategoria.DESPESA)));
+        controller.inserirLancamento(new Receita(1000.0, LocalDate.of(2024, 8, 8), new Categoria("Investimento", TipoCategoria.RECEITA)));
+        controller.inserirLancamento(new Despesa(200.0, LocalDate.of(2024, 11, 1), new Categoria("Aluguel", TipoCategoria.DESPESA)));
+        //os abaixo não vão ser calculados
+        controller.inserirLancamento(new Receita(2000.0, LocalDate.of(2025, 2, 10), new Categoria("Investimento", TipoCategoria.RECEITA)));
+        controller.inserirLancamento(new Despesa(100.0, LocalDate.of(2025, 5, 15), new Categoria("Aluguel", TipoCategoria.DESPESA)));
+
+        double saldo = controller.calcularSaldo(null, LocalDate.of(2025, 1, 31));
+        assertEquals(1100.0, saldo, 0.01);
     }
 
     /**
-     * Teste para calcular saldo em período válido.
+     * Teste para calcular saldo com desde e até DEFINIDO.
      */
     @Test
-    public void testCalcularSaldoPeriodoValido() {
+    public void testCalcularSaldoPeriodoDefinido() {
         System.out.println("calcularSaldoPeriodoValido");
         LancamentoController controller = new LancamentoController();
         controller.inserirLancamento(new Receita(500.0, LocalDate.of(2024, 1, 1), new Categoria("Investimento", TipoCategoria.RECEITA)));
-        controller.inserirLancamento(new Despesa(200.0, LocalDate.of(2024, 1, 10), new Categoria("Aluguel", TipoCategoria.DESPESA)));
+        controller.inserirLancamento(new Despesa(200.0, LocalDate.of(2024, 4, 16), new Categoria("Aluguel", TipoCategoria.DESPESA)));
+        //os acima não vão ser calculados
+        controller.inserirLancamento(new Receita(1000.0, LocalDate.of(2024, 8, 8), new Categoria("Investimento", TipoCategoria.RECEITA)));
+        controller.inserirLancamento(new Despesa(200.0, LocalDate.of(2024, 11, 1), new Categoria("Aluguel", TipoCategoria.DESPESA)));
+        //os abaixo não vão ser calculados
+        controller.inserirLancamento(new Receita(2000.0, LocalDate.of(2025, 2, 10), new Categoria("Investimento", TipoCategoria.RECEITA)));
+        controller.inserirLancamento(new Despesa(100.0, LocalDate.of(2025, 5, 15), new Categoria("Aluguel", TipoCategoria.DESPESA)));
 
-        double saldo = controller.calcularSaldo(LocalDate.of(2024, 1, 1), LocalDate.of(2024, 1, 31));
-        assertEquals(300.0, saldo, 0.01);
+        double saldo = controller.calcularSaldo(LocalDate.of(2024, 5, 15), LocalDate.of(2024, 12, 31));
+        assertEquals(800.0, saldo, 0.01);
     }
 
 

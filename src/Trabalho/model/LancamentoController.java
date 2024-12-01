@@ -111,6 +111,9 @@ public class LancamentoController {
      * @param categoria a categoria a ser incluida
      */
     public void incluirCategoria(Categoria categoria){
+        if (categoria == null) {
+            throw new IllegalArgumentException();
+        }
         this.categorias.add(categoria);
     }
     
@@ -119,6 +122,9 @@ public class LancamentoController {
      * @param categoria a categoria a ser removida
      */
     public void removerCategoria(Categoria categoria){
+        if (categoria == null) {
+            throw new IllegalArgumentException();
+        }
         this.categorias.remove(categoria);
     }
     
@@ -184,7 +190,6 @@ public class LancamentoController {
         double saldo = 0;
         
         for(Lancamento lancamento : getLancamentos()){
-            
             if(!desde.equals(null) && !ate.equals(null)){
                 int cmpDesde = lancamento.getData().compareTo(desde);
                 int cmpAte = lancamento.getData().compareTo(ate);
